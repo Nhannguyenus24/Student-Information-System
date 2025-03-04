@@ -1,0 +1,51 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document, Types } from 'mongoose';
+
+export type TuitionDocument = Tuition & Document;
+
+@Schema()
+export class GiaHanHocPhi {
+  @Prop()
+  CoGiaHanHocPhi: boolean;
+
+  @Prop({ type: Date })
+  ThoiGianGiaHan: Date;
+
+  @Prop()
+  LyDo: string;
+}
+
+@Schema()
+export class Tuition {
+    @Prop({ type: Types.ObjectId, ref: 'Student', required: true })
+    SinhVienID: Types.ObjectId;
+
+    @Prop({ type: Types.ObjectId, ref: 'Course' })
+    KhoaHocID: Types.ObjectId;
+
+    @Prop()
+    HocKy: number;
+
+    @Prop({ type: Date })
+    NamHoc: Date;
+
+    @Prop()
+    NoiDung: string;
+
+    @Prop({ type: Number, precision: 10, scale: 2 }) // decimal(10, 2)
+    SoTienCanDong: number;
+
+    @Prop({ enum: ['đã đóng', 'chưa đóng', 'gia hạn'], default: 'chưa đóng' })
+    TrangThaiThanhToan: string;
+
+    @Prop({ type: Date })
+    HanDongHocPhi: Date;
+
+    @Prop({ type: GiaHanHocPhi })
+    GiaHanHocPhi: GiaHanHocPhi;
+
+    @Prop({ type: Date, default: Date.now })
+    NgayTao: Date;
+}
+
+export const TuitionSchema = SchemaFactory.createForClass(Tuition);
