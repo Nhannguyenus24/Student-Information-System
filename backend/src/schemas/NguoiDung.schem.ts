@@ -6,13 +6,13 @@ export type NguoiDungDocument = NguoiDung & Document;
 @Schema()
 export class Token {
     @Prop()
-    accessToken: string;
+    AccessToken: string;
 
     @Prop()
-    refreshToken: string;
+    RefreshToken: string;
 
     @Prop()
-    resetToken: string;
+    ResetToken: string;
 }
 
 @Schema()
@@ -22,16 +22,16 @@ export class NguoiDung {
     Email: string;
 
     @Prop({unique: true})
-    username: string;
+    Username: string;
 
     @Prop({required: true})
     MatKhau: string;
     
-    @Prop({type: [Token]})
-    token: Token;
+    @Prop({type: Token})
+    Token: Token;
 
     @Prop({ enum: ['Sinh viên', 'Giảng viên', 'Quản trị viên'], default: 'Sinh viên' })
-    role: string;
+    Role: string;
 
 
 }
