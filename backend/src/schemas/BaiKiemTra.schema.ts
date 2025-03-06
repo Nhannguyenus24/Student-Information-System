@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type KiemTraDocument = KiemTra & Document;
+export type BaiKiemTraDocument = BaiKiemTra & Document;
 
 @Schema()
 export class DeThi {
@@ -25,7 +25,7 @@ export class DanhGia {
 }
 
 @Schema()
-export class KiemTra {
+export class BaiKiemTra {
     @Prop({ required: true })
     TenBaiKiemTra: string;
 
@@ -52,4 +52,4 @@ export class KiemTra {
 
 }
 
-export const KiemTraSchema = SchemaFactory.createForClass(KiemTra);
+export const BaiKiemTraSchema = SchemaFactory.createForClass(BaiKiemTra);

@@ -4,11 +4,11 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { SinhVienModule } from './SinhVien/SinhVien.module';
 import { DiemDanhModule } from './DiemDanh/DiemDanh.module';
-import { KiemTraModule } from './KiemTra/KiemTra.module';
-import { ThamGiaKiemTraModule } from './ThamGiaKiemTra/ThamGiaKiemTra.module';
-import { DiemModule } from './Diem/Diem.module';
+import { BaiKiemTraModule } from './BaiKiemTra/BaiKiemTra.module';
+import { ThamGiaLamBaiModule } from './ThamGiaLamBai/ThamGiaLamBai.module';
+import { DiemSoModule } from './DiemSo/DiemSo.module';
 import { KyLuatModule } from './KyLuat/KyLuat.module';
-import { LichModule } from './Lich/Lich.module';
+import { LichHocModule } from './LichHoc/LichHoc.module';
 import { KhoaHocModule } from './KhoaHoc/KhoaHoc.module';
 import { GiangVienModule } from './GiangVien/GiangVien.module';
 import { HocPhiModule } from './HocPhi/HocPhi.module';
@@ -19,11 +19,11 @@ import { PhuHuynhModule } from './PhuHuynh/PhuHuynh.module';
     MongooseModule.forRoot('mongodb+srv://sis:sis@cluster0.xqphw.mongodb.net/'),
     SinhVienModule,
     DiemDanhModule,
-    KiemTraModule,
-    ThamGiaKiemTraModule,
-    DiemModule,
+    BaiKiemTraModule,
+    ThamGiaLamBaiModule,
+    DiemSoModule,
     KyLuatModule,
-    LichModule,
+    LichHocModule,
     KhoaHocModule,
     GiangVienModule,
     HocPhiModule,

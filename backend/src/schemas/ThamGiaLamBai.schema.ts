@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type ThamGiaKiemTraDocument = ThamGiaKiemTra & Document;
+export type ThamGiaLamBaiDocument = ThamGiaLamBai & Document;
 
 @Schema()
-export class ThamGiaKiemTra {
+export class ThamGiaLamBai {
   @Prop({ type: Types.ObjectId, ref: 'SinhVien', required: true })
   SinhVienID: Types.ObjectId;
 
@@ -24,4 +24,4 @@ export class ThamGiaKiemTra {
   GhiChu: string;
 }
 
-export const ThamGiaKiemTraSchema = SchemaFactory.createForClass(ThamGiaKiemTra);
+export const ThamGiaLamBaiSchema = SchemaFactory.createForClass(ThamGiaLamBai);

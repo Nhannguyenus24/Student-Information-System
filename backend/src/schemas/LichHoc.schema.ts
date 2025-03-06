@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Types } from "mongoose";
 
 
-export type LichDocument = Lich & Document;
+export type LichHocDocument = LichHoc & Document;
 
 @Schema()
-export class Lich {
+export class LichHoc {
     @Prop({type: Types.ObjectId, ref: 'KhoaHoc', required: true})
     KhoaHocID: Types.ObjectId;
 
@@ -28,4 +28,4 @@ export class Lich {
     NgayCapNhat: Date;
 }
 
-export const LichSchema = SchemaFactory.createForClass(Lich); 
+export const LichHocSchema = SchemaFactory.createForClass(LichHoc); 

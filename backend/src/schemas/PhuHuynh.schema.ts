@@ -17,7 +17,7 @@ export class ThongBao{
 @Schema()
 export class PhuHuynh{
     @Prop({ type: Types.ObjectId, ref: 'SinhVien', required: true})
-    StudentID: Types.ObjectId;
+    SinhVienID: Types.ObjectId;
 
     @Prop({required: true})
     HoTen: string;

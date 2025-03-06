@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 
-export type DiemDocument = Diem & Document;
+export type DiemSoDocument = DiemSo & Document;
 
 @Schema()
 export class DiemThanhPhan {
@@ -19,7 +19,7 @@ export class DiemThanhPhan {
 }
 
 @Schema()
-export class Diem {
+export class DiemSo {
     @Prop({ type: Types.ObjectId, ref: 'SinhVien', required: true })
     SinhVienID: Types.ObjectId;
 
@@ -32,4 +32,4 @@ export class Diem {
 
 }
 
-export const DiemSchema = SchemaFactory.createForClass(Diem);
+export const DiemSoSchema = SchemaFactory.createForClass(DiemSo);
