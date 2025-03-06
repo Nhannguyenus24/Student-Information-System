@@ -2,39 +2,68 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
 
 export type StudentDocument = Student & Document;
+
+@Schema()
+export class Token {
+    @Prop()
+    accessToken: string;
+
+    @Prop({ type: Date })
+    accessTokenExpires: Date;
+
+    @Prop()
+    refreshToken: string;
+
+    @Prop({ type: Date })
+    refreshTokenExpires: Date;
+
+    @Prop()
+    resetToken: string;
+
+    @Prop({ type: Date })
+    resetTokenExpires: Date;
+}
+
 @Schema()
 export class Student {
     @Prop()
-    fullname: string;
+    HoTen: string;
 
     @Prop()
-    dob: Date;
+    NgaySinh: Date;
 
     @Prop()
-    gender: string;
+    GioiTinh: string;
 
     @Prop()
-    address: string;
+    DiaChi: string;
 
-    @Prop()
-    phoneNumber: string;
+    @Prop( {unique: true})
+    SoDienThoai: string;
 
-    @Prop()
+    @Prop({unique: true})
     Email: string;
 
     @Prop()
-    faculty: string;
+    Khoa: string;
 
     @Prop({ unique: true })
-    identity: string;
+    CCCD: string;
 
     @Prop()
-    Image: string;
+    Anh: string;
 
     @Prop({ enum: ['đang học', 'bảo lưu', 'tốt nghiệp', 'nghỉ học'], default: 'đang học' })
-    status: string;
+    TrangThai: string;
 
+    @Prop({required: true})
+    password: string;
+    
+    @Prop({type: [Token]})
+    token: Token;
+    
     @Prop({ type: Date, default: Date.now })
-    updateTime: Date;
+    ThoiGianCapNhat: Date;
+
 }
 export const StudentSchema = SchemaFactory.createForClass(Student);

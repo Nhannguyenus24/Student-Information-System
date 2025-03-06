@@ -17,10 +17,10 @@ export class Teacher {
     @Prop()
     DiaChi: string;
 
-    @Prop()
+    @Prop({required: true, unique: true})
     SoDienThoai: string;
 
-    @Prop()
+    @Prop({required: true, unique: true})
     Email: string;
 
     @Prop()
@@ -29,7 +29,7 @@ export class Teacher {
     @Prop()
     Khoa: string;
 
-    @Prop({ unique: true })
+    @Prop({ required: true, unique: true })
     CCCD: string;
 
     @Prop()

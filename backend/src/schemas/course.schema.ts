@@ -4,12 +4,6 @@ import { Document, Types } from 'mongoose';
 export type CourseDocument = Course & Document;
 
 @Schema()
-export class SinhVienDangKy {
-  @Prop({ type: Types.ObjectId, ref: 'Student', required: true })
-  SinhVienID: Types.ObjectId;
-}
-
-@Schema()
 export class TaiLieu {
   @Prop({ required: true })
   TenTaiLieu: string;
@@ -20,7 +14,7 @@ export class TaiLieu {
 
 @Schema()
 export class Course {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   TenKhoaHoc: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Teacher', required: true })
@@ -35,8 +29,8 @@ export class Course {
   @Prop()
   MoTa: string;
 
-  @Prop({ type: [SinhVienDangKy], default: [] })
-  SinhVienDangKy: SinhVienDangKy[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Student' }], default: [] })
+  SinhVienDangKy: Types.ObjectId[];
 
   @Prop({ type: [TaiLieu], default: [] })
   TaiLieu: TaiLieu[];
