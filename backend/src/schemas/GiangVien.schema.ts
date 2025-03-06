@@ -20,9 +20,6 @@ export class GiangVien {
     @Prop({required: true, unique: true})
     SoDienThoai: string;
 
-    @Prop({required: true, unique: true})
-    Email: string;
-
     @Prop()
     ChucVu: string;
 
