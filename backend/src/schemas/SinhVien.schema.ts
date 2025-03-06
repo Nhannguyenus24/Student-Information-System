@@ -57,7 +57,7 @@ export class SinhVien {
     TrangThai: string;
 
     @Prop({required: true})
-    password: string;
+    MatKhau: string;
     
     @Prop({type: [Token]})
     token: Token;
