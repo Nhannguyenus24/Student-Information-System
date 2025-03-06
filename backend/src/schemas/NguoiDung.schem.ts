@@ -23,7 +23,7 @@ export class NguoiDung {
 
     @Prop({unique: true})
     username: string;
-    
+
     @Prop({required: true})
     MatKhau: string;
     
