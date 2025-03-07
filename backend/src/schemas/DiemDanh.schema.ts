@@ -14,7 +14,7 @@ export class DiemDanh {
     @Prop({ type: Date, required: true })
     NgayHoc: Date;
 
-    @Prop({ enum: ['Có mặt', 'Vắng', 'Muộn'], default: 'Có mặt' })
+    @Prop({ enum: ['Present', 'Absent', 'Late'], default: 'Present' })
     TrangThai: string;
 
     @Prop()

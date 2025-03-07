@@ -17,7 +17,7 @@ export class ThamGiaLamBai {
   @Prop()
   Diem: number;
 
-  @Prop({ enum: ['Chờ chấm', 'Đã chấm', 'Tự chấm'], default: 'Chờ chấm' })
+  @Prop({ enum: ['Pending', 'Graded', 'Auto'], default: 'Pending' })
   TrangThai: string;
 
   @Prop()

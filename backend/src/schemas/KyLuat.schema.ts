@@ -14,7 +14,7 @@ export class KyLuat {
     @Prop({ type: Date })
     NgayLap: Date;
 
-    @Prop({ enum: ['đang xử lý', 'đã xử lý'], default: 'đang xử lý' })
+    @Prop({ enum: ['Processing', 'Processed'], default: 'Processing' })
     TrangThai: string;
 
     @Prop()

@@ -29,7 +29,7 @@ export class SinhVien {
     @Prop()
     Anh: string;
 
-    @Prop({ enum: ['đang học', 'bảo lưu', 'tốt nghiệp', 'nghỉ học'], default: 'đang học' })
+    @Prop({ enum: ['Studying', 'On hold', 'Graduated', 'Dropped Out'], default: 'Studying' })
     TrangThai: string;
     
     @Prop({ type: Date, default: Date.now })

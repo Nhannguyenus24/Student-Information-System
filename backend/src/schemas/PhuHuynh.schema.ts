@@ -11,7 +11,7 @@ export class ThongBao{
     @Prop({required: true})
     NoiDungThongBao: string;
 
-    @Prop({ enum: ['email', 'sms', 'cả hai'], default: 'email' })
+    @Prop({ enum: ['email', 'sms', 'both'], default: 'email' })
     PhuongThucGui: string;
 }
 @Schema()

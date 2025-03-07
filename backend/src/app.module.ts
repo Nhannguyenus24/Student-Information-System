@@ -13,7 +13,7 @@ import { KhoaHocModule } from './KhoaHoc/KhoaHoc.module';
 import { GiangVienModule } from './GiangVien/GiangVien.module';
 import { HocPhiModule } from './HocPhi/HocPhi.module';
 import { PhuHuynhModule } from './PhuHuynh/PhuHuynh.module';
-import { NguoiDungModule } from './nguoi-dung/nguoi-dung.module';
+import { UserModule } from './User/User.module';
 
 @Module({
   imports: [
@@ -29,7 +29,7 @@ import { NguoiDungModule } from './nguoi-dung/nguoi-dung.module';
     GiangVienModule,
     HocPhiModule,
     PhuHuynhModule,
-    NguoiDungModule,
+    UserModule,
     
   ],
   controllers: [AppController],

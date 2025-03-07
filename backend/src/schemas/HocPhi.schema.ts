@@ -35,7 +35,7 @@ export class HocPhi {
     @Prop({ type: Number, precision: 10, scale: 2 }) // decimal(10, 2)
     SoTienCanDong: number;
 
-    @Prop({ enum: ['đã đóng', 'chưa đóng', 'gia hạn'], default: 'chưa đóng' })
+    @Prop({ enum: ['Paid', 'Unpaid', 'Extended'], default: 'Unpaid' })
     TrangThaiThanhToan: string;
 
     @Prop({ type: Date })
