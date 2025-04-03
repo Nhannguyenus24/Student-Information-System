@@ -3,7 +3,6 @@ import { GiangVienService } from './GiangVien.service';
 import { JWTAuthGuard } from 'src/auth/guards/jwt.guard';
 import { AuthService } from 'src/auth/auth.service';
 import { UpdateGiangVienDto } from './dto/update-giangvien.dto';
-import { query } from 'express';
 import { AddTeacherDto } from './dto/add-giangvien.dto';
 import { GetTeacherListDto } from './dto/getListGiangVien.dto';
 

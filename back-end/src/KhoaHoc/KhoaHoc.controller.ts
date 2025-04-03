@@ -2,7 +2,6 @@ import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Q
 import { KhoaHocService } from './KhoaHoc.service';
 import { JWTAuthGuard } from 'src/auth/guards/jwt.guard';
 import { AddCourseDto } from 'src/KhoaHoc/dto/add-KhoaHoc.dto'
-import { query } from 'express';
 import { GetCourseListDto } from './dto/getListCourse.dto';
 import { UpdateCourseDto } from './dto/updateCourse.dto';
 import { Types } from 'mongoose';

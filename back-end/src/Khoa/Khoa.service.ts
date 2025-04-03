@@ -2,7 +2,6 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Khoa, KhoaDocument } from 'src/schemas/Khoa.schema';
-import { addKhoaDTO } from './dto/addKhoa.dto';
 import { getFacultyListDTO } from './dto/getFacultyList.dto';
 import { updateKhoaDTO } from './dto/updateKhoa.dto';
 
