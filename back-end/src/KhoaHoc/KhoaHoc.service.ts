@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId, Types } from 'mongoose';
 import { KhoaHoc, KhoaHocDocument } from 'src/schemas/KhoaHoc.schema';
@@ -9,13 +9,17 @@ import { SinhVienService } from 'src/SinhVien/SinhVien.service';
 import { GiangVienService } from 'src/GiangVien/GiangVien.service';
 import { GiangVien, GiangVienDocument } from 'src/schemas/GiangVien.schema';
 import { transcode } from 'buffer';
+import { TaiLieu, TaiLieuDocument } from 'src/schemas/TaiLieu.schema';
+import { UploadService } from 'src/upload/upload.service';
 
 @Injectable()
 export class KhoaHocService {
     constructor(
         @InjectModel(KhoaHoc.name) private readonly khoaHocModel: Model<KhoaHocDocument>,
         private readonly sinhVienService: SinhVienService,
+        private readonly uploadService: UploadService,
         @InjectModel(GiangVien.name) private readonly giangVienModel: Model<GiangVienDocument>,
+        // @InjectModel(TaiLieu.name) private taiLieuModel: Model<TaiLieuDocument>,
     ){}
 
 
@@ -106,7 +110,7 @@ export class KhoaHocService {
                                                                     .exec();
         return khoaHoc;
     }
-
+    
     async getCourseByID(KhoaHocID: string)
     {
         return await this.khoaHocModel.findById(KhoaHocID).exec();
@@ -267,4 +271,22 @@ export class KhoaHocService {
             throw new BadRequestException('Sinh viên không có trong danh sách khóa học này.');
         }
     }
+
+    async getFilesByKhoaHocId(khoaHocId: string) {
+        const khoaHoc = await this.khoaHocModel.findById(khoaHocId).exec();
+        if (!khoaHoc) {
+          throw new NotFoundException(`Không tìm thấy khóa học với ID ${khoaHocId}`);
+        }
+    
+        const files = await this.khoaHocModel.findById(khoaHocId).populate('TaiLieu').exec();
+        return files?.TaiLieu;
+    }
+
+    async deleteFile(khoaHocId: string, taiLieuId: string, user: any): Promise<void> {
+        
+        const khoaHoc = await this.khoaHocModel.findById(khoaHocId).exec();
+        if (!khoaHoc) throw new NotFoundException(`Không tìm thấy khóa học ${khoaHocId}`);
+    
+        await this.uploadService.deleteFile(taiLieuId, khoaHocId, user);
+      }
 }

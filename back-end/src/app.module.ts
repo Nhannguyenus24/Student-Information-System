@@ -15,6 +15,7 @@ import { BaiKiemTraModule } from './BaiKiemTra/BaiKiemTra.module';
 import { DiemDanhModule } from './DiemDanh/DiemDanh.module';
 import { DiemSoModule } from './DiemSo/DiemSo.module';
 import { KhoaModule } from './Khoa/Khoa.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -22,14 +23,11 @@ import { KhoaModule } from './Khoa/Khoa.module';
     MongooseModule.forRoot(
       'mongodb+srv://sis:sis@cluster0.xqphw.mongodb.net/',
     ),
-    // AzureStorageModule.withConfig({
-    //   sasKey: process.env.AZURE_STORAGE_SAS_KEY,
-    //   accountName: process.env.AZURE_STORAGE_ACCOUNT,
-    //   containerName: 'course-documents',
-    // }),
+
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [config]
+      // load: [config],
+      envFilePath: '.env'
     }),
     AuthModule,
     SinhVienModule,
@@ -44,6 +42,7 @@ import { KhoaModule } from './Khoa/Khoa.module';
     KhoaModule,
     DiemDanhModule,
     DiemSoModule,
+    UploadModule,
   ],
 })
 export class AppModule {}

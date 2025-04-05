@@ -3,14 +3,14 @@ import mongoose, { Document, Types } from 'mongoose';
 
 export type KhoaHocDocument = KhoaHoc & Document;
 
-@Schema()
-export class TaiLieu {
-  @Prop({ required: true })
-  TenTaiLieu: string;
+// @Schema()
+// export class TaiLieu {
+//   @Prop({ required: true })
+//   TenTaiLieu: string;
 
-  @Prop({ required: true })
-  LinkTaiLieu: string;
-}
+//   @Prop({ required: true })
+//   LinkTaiLieu: string;
+// }
 
 @Schema()
 export class KhoaHoc {
@@ -36,8 +36,10 @@ export class KhoaHoc {
   SinhVienDangKy: Types.ObjectId[];
   
 // fans: [{ type: Schema.Types.ObjectId, ref: 'Person' }]
-  @Prop({ type: [TaiLieu], default: [] })
-  TaiLieu: TaiLieu[];
+  // @Prop({ type: [TaiLieu], default: [] })
+  // TaiLieu: TaiLieu[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'TaiLieu' }], default: [] }) // Danh sách ID tài liệu
+  TaiLieu: Types.ObjectId[];
 
   @Prop({ type: Date, default: Date.now })
   NgayCapNhat: Date;

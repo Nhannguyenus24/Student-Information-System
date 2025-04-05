@@ -30,6 +30,23 @@ export class KhoaHocController {
         }
     }
 
+    @Get('getCourseByID/:id')
+    @UseGuards(JWTAuthGuard)
+    async getCourseByID(@Param('id') id: string)
+    {
+
+        try{
+            console.log('Mã khóa học: ', id);
+            const KhoaHoc = await this.khoaHocService.getCourseByID(id);
+            if (!KhoaHoc)
+                throw new BadRequestException('Không tìm thấy khóa học.');
+            return KhoaHoc;
+        }catch(error)
+        {
+            return error;
+        }
+    }
+
     @Get('getRegisteredStudent/:MaKhoaHoc')
     @UseGuards(JWTAuthGuard)
     async getRegisteredStudent(@Param('MaKhoaHoc') MaKhoaHoc: string)
@@ -145,5 +162,27 @@ export class KhoaHocController {
         if (req.user.role !== 'Admin')
             throw new UnauthorizedException('Bạn không có quyền xóa sinh viên khỏi khóa học.');
         return this.khoaHocService.removeStudentFromCourseByAdmin(MaKHoaHoc, body.mssv);
+    }
+
+    @Get('files/:khoaHocId')
+    @UseGuards(JWTAuthGuard)
+    async getFilesByKhoaHocId(@Req() req: any,@Param('khoaHocId') khoaHocId: string) {
+        
+        const files = await this.khoaHocService.getFilesByKhoaHocId(khoaHocId);
+        return { message: 'Danh sách tài liệu của khóa học', files };
+    }
+
+    @Delete('removeFile/:khoaHocId/:taiLieuId')
+    @UseGuards(JWTAuthGuard)
+    async removeFile(@Req() req: any, @Param('khoaHocId') khoaHocId: string, @Param('taiLieuId') taiLieuId: string){
+        
+        try {
+            if (req.user.role !== "Admin" && req.user.role !=="Teacher")
+                throw new UnauthorizedException('Không có quyền thực hiện thao tác này')
+            const result = await this.khoaHocService.deleteFile(khoaHocId, taiLieuId, req.user);
+            return result;
+        } catch (error) {
+            return { message: error.message };
+        }
     }
 }
