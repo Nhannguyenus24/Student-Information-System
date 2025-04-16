@@ -241,10 +241,13 @@ export class BaiKiemTraService {
       deThiArray.push(deThi);
     });
 
+    console.log(deThiArray);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const baiKiemTra = new this.BaiKiemTraModel({
       ...createTestDto,
       DeThi: deThiArray,
     });
+    await baiKiemTra.save();
+
   }
 }

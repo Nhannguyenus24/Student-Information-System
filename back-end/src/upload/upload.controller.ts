@@ -53,6 +53,23 @@ export class UploadController {
     return { message: 'File uploaded successfully', file: uploadedFile };
   }
 
+  @Post('avatar')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe())
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadAvatar(@Req() req: any, @UploadedFile() file: Express.Multer.File,) {
+    if (!file) throw new BadRequestException('Thiếu file.');
+    if (req.user.role !== 'teacher') {
+      throw new UnauthorizedException('Không có quyền upload ảnh giáo viên.');
+    }
+
+    const uploadedAvatar = await this.uploadService.uploadAvatar(
+      file,
+      req.user.username,
+      req.user.role,
+    );
+    return { message: 'Avatar uploaded successfully', uploadedAvatar };
+  }
   @Get(':id')
   @UseGuards(JWTAuthGuard)
   async getFileById(@Param('id') id: string) {

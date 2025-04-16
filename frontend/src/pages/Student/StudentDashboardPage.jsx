@@ -32,8 +32,6 @@ import {
   ListItemText,
   ListItemIcon,
 } from "@mui/material";
-import Header from "../../components/Header";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -428,11 +426,6 @@ export default function Dashboard() {
   return (
     <Page title="StudentDashboardPage">
       <Box sx={{ display: "flex" }}>
-        <Header toggleDrawer={toggleDrawer} />
-        <NavigationDrawer
-          isDrawerOpen={isDrawerOpen}
-          toggleDrawer={toggleDrawer}
-        />
 
         <Box
           component="main"

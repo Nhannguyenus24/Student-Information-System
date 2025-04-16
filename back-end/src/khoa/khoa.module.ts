@@ -3,8 +3,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Khoa, KhoaSchema } from 'src/schemas/Khoa.schema';
 import { JwtModule } from '@nestjs/jwt';
-import { KhoaService } from './Khoa.service';
 import { KhoaController } from './Khoa.controller';
+import { KhoaService } from './Khoa.service';
+
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Khoa.name, schema: KhoaSchema }]),

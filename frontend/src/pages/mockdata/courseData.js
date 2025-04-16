@@ -10,7 +10,7 @@ const classesData = [
     credit: 3,
     startDate: "2024-08-15",
     dueDate: "2024-12-20",
-    year: "2022",
+    year: 2022,
     status: "In Progress",
     reviewsCompleted: 40,
     totalReviews: 50,

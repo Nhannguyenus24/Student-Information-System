@@ -2,33 +2,37 @@
 
 import React, { useState, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import Drawer from "@mui/material/Drawer"
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import ListItemIcon from "@mui/material/ListItemIcon"
-import ListItemText from "@mui/material/ListItemText"
-import Divider from "@mui/material/Divider"
-import LogoutIcon from "@mui/icons-material/Logout"
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import Avatar from "@mui/material/Avatar"
-import DashboardIcon from "@mui/icons-material/Dashboard"
-import SchoolIcon from "@mui/icons-material/School"
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import AppRegistrationIcon from "@mui/icons-material/AppRegistration"
-import PaymentIcon from "@mui/icons-material/Payment"
-import GradeIcon from "@mui/icons-material/Grade"
-import SettingsIcon from "@mui/icons-material/Settings"
-import HelpIcon from "@mui/icons-material/Help"
-import { styled } from "@mui/material/styles"
-import Tooltip from "@mui/material/Tooltip"
-import Collapse from "@mui/material/Collapse"
-import ExpandLess from "@mui/icons-material/ExpandLess"
-import ExpandMore from "@mui/icons-material/ExpandMore"
-import AssignmentIcon from "@mui/icons-material/Assignment"
-import EventNoteIcon from "@mui/icons-material/EventNote"
-import PersonIcon from "@mui/icons-material/Person"
-import Badge from "@mui/material/Badge"
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Box,
+  Typography,
+  Avatar,
+  Tooltip,
+  Collapse,
+  Badge,
+} from "@mui/material";
+
+import {
+  Logout as LogoutIcon,
+  Dashboard as DashboardIcon,
+  School as SchoolIcon,
+  CalendarMonth as CalendarMonthIcon,
+  AppRegistration as AppRegistrationIcon,
+  Payment as PaymentIcon,
+  Grade as GradeIcon,
+  Settings as SettingsIcon,
+  Help as HelpIcon,
+  Assignment as AssignmentIcon,
+  EventNote as EventNoteIcon,
+  Person as PersonIcon,
+  ExpandLess,
+  ExpandMore,
+} from "@mui/icons-material";
 
 const drawerWidth = 240
 

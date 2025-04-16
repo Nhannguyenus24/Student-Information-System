@@ -6,23 +6,23 @@ import Button from "@mui/material/Button"
 
 import Logo from "../assets/Logo.svg"
 
-export default function Header({}) {
+export default function Header() {
   return (
     <AppBar
       position="fixed"
       sx={{
         width: "100%",
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: "#FCFDFF",
-        color: "#407BFF",
+        backgroundColor: "primary.lighter",
+        color: "primary.main",
         boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.08)",
         px: "5em"
       }}
     >
-      <Toolbar sx={{}}>
+      <Toolbar>
         <Box component="img" src={Logo} alt="Logo" sx={{ width: 40, mr: 2}}>
         </Box>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 800, color: "" }}>
+        <Typography sx={{ flexGrow: 1, fontWeight: 700, fontSize: "1.5rem" }}>
           InfoStudia
         </Typography>
           <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
@@ -33,12 +33,12 @@ export default function Header({}) {
                 href={`/${text.toLowerCase()}`}
                 sx={{
                   textDecoration: "none",
-                  color: "#000",
+                  color: "secondary.darker",
                   fontWeight: 400,
                   mx: 2,
                   fontSize: "1rem",
-                  "&:hover": { color: "#407BFF" },
-                  "&:active": { color: "#165EFF" },
+                  "&:hover": { color: "primary.main" },
+                  "&:active": { color: "primary.dark" },
                 }}
               >
                 {text}
@@ -46,11 +46,11 @@ export default function Header({}) {
           ))}
           <Button
             component="a"
-            href="/login"
+            href="/auth/login"
             sx={{
-              backgroundColor: "#407BFF",
-              color: "white",
-              fontWeight: 700,
+              backgroundColor: "primary.main",
+              color: "primary.lighter",
+              fontWeight: 600,
               textTransform: "none",
               px: 3,
               py: 1,
@@ -58,7 +58,7 @@ export default function Header({}) {
               mx: 1.5,
               fontSize: "1rem",
               boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.1)",
-              "&:hover": { backgroundColor: "white", color: "#407BFF" }
+              "&:hover": { backgroundColor: "primary.lighter", color: "primary.main" }
             }}
           >
             Login

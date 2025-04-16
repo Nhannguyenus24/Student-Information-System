@@ -11,8 +11,8 @@ export class LichHoc {
   @Prop({ type: Types.ObjectId, ref: 'GiangVien' })
   GiangVienID: Types.ObjectId;
 
-  @Prop({ type: String })
-  NgayHoc: string;
+  @Prop({ type: Number })
+  NgayHoc: number;
 
   @Prop({ type: String })
   ThoiGianBatDau: string;

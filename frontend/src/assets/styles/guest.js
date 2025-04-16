@@ -1,9 +1,10 @@
 // GUEST UI
 
+
 // BUTTONS
 
 const buttonStyles = {
-    fontWeight: 700,
+    fontWeight: 600,
     textTransform: "none",
     p: "0.8em",
     borderRadius: "0.4em",
@@ -13,16 +14,16 @@ const buttonStyles = {
 
 const blueButton = {
     ...buttonStyles,
-    backgroundColor: "#407BFF",
+    backgroundColor: "primary.main",
     color: "white",
-    "&:hover": { backgroundColor: "white", color: "#407BFF" }
+    "&:hover": { backgroundColor: "white", color: "primary.main" }
 };
   
 const whiteButton = {
     ...buttonStyles,
     backgroundColor: "white",
-    color: "#407BFF",
-    "&:hover": { backgroundColor: "#407BFF", color: "white" }
+    color: "primary.main",
+    "&:hover": { backgroundColor: "primary.main", color: "white" }
 };
 
 const guestBlueButton = {
@@ -41,9 +42,8 @@ const guestViewDetailsButton = {
     py: "0.4em",
     fontSize: "1rem",
     borderRadius: "0.2em",
-    backgroundColor: "#407BFF",
+    backgroundColor: "primary.main",
     color: "white",
-    fontWeight: 500,
     "&:hover": { backgroundColor: "#2970FF" }
 }
 
@@ -51,7 +51,7 @@ const guestRoundBlueButton = {
     ...blueButton,
     fontSize: "0.8rem",
     borderRadius: "2em",
-    fontWeight: 700
+    fontWeight: 600
 }
 
 export { buttonStyles, blueButton, whiteButton, guestBlueButton, guestWhiteButton, guestViewDetailsButton, guestRoundBlueButton };
@@ -64,14 +64,14 @@ const guestDefaultContainer = {
     maxWidth: "xl"
 }
 
-const guestContainerMain = {
+const guestContainerHomeParts = {
     ...guestDefaultContainer,
     sx: { px: "6.5em" }
 }
 
 const guestContainerBesidesHome = {
-    ...guestContainerMain,
-    sx: { pt: "6em", pb: "3em", px: "6.5em" }
+    ...guestDefaultContainer,
+    sx: { py: "7em", pb: "3em", px: "6.5em" }
 }
 
 const guestContainerLogin = {
@@ -101,63 +101,83 @@ const guestContainerLoginSection = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    gap: "2em"
+    gap: "2em",
 }
 
 const guestContainerLoginSubsection = {
     display: "flex",
     flexDirection: "column",
     gap: "0.7em",
-    width: "80%"
+    width: "80%",
+}
+
+const guestContainerLoginSubsectionForm = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.7em",
+    width: "80%",
+    backgroundColor: "red"
+}
+
+const guestContainerImage = {
+    disableGutters: true,
+    maxWidth: "xl",
+    py: "7em", pb: "3em", px: "6.5em",
+    minHeight: "100vh",
+    position: "relative",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+
+    "&::before": {
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        zIndex: -1
+    },
+
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    color: "white",
+    zIndex: 0,
 }
 
 const guestContainerContact = {
-    ...guestDefaultContainer,
-    sx: {
-        pt: "6em", pb: "3em", px: "6.5em",
-        minHeight: "100vh",
-        position: "relative",
-        backgroundImage: "url('/Contact.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+    ...guestContainerImage,
+    backgroundImage: "url('/Contact.jpg')",
+}
 
-        "&::before": {
-            content: '""',
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            zIndex: -1
-        },
+const guestContainerImageHome = {
+    ...guestContainerImage,
+    backgroundImage: "url('/SaigonBridge.jpg')",
+    gap: "7em", pt: "5em"
+}
 
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        color: "white",
-        zIndex: 0,
-    }
-};
-
-export { guestDefaultContainer, guestContainerMain, guestContainerBesidesHome, guestContainerContact,
-        guestContainerLogin, guestContainerLoginBox, guestContainerLoginSection, guestContainerLoginSubsection, }
+export { guestDefaultContainer, guestContainerHomeParts, guestContainerBesidesHome,
+        guestContainerImage, guestContainerContact, guestContainerImageHome,
+        guestContainerLogin, guestContainerLoginBox,
+        guestContainerLoginSection, guestContainerLoginSubsection, guestContainerLoginSubsectionForm }
 
 
 // TEXT
 
 const guestTitle = {
     textAlign: "center",
-    fontWeight: "700",
-    color: "#407BFF",
-    fontSize: "4rem",
-    mb: "0.5em"
+    fontWeight: 600,
+    color: "primary.main",
+    fontSize: "3.5rem",
+    mb: "1em"
 }
 
 const guestSpanStrong = {
-    color: "#407BFF",
-    fontWeight: 700
+    color: "primary.main",
+    fontWeight: 600,
+    display: "inline"
 }
 
 const guestLoginSection = {
@@ -172,3 +192,16 @@ const guestLoginLabel = {
 }
 
 export { guestTitle, guestSpanStrong, guestLoginSection, guestLoginLabel }
+
+// CARD
+
+const guestBlueStairsCard = {
+    backgroundColor: "primary.dark",
+    p: "1.5em",
+    borderRadius: 3,
+    display: "flex",
+    gap: "2em",
+    width: "50%",
+}
+
+export { guestBlueStairsCard }

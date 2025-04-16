@@ -231,4 +231,28 @@ export class SinhVienService {
     }
     return sinhVien.ThongBao || [];
   }
+
+  async markNotiAsRead(mssv: string, thongBaoId: string): Promise<SinhVienDocument> {
+    const sinhVien = await this.sinhVienModel.findOne({ mssv });
+    if (!sinhVien) {
+      throw new NotFoundException('Không tìm thấy sinh viên.');
+    }
+  
+    const thongBaoExists = sinhVien.ThongBao.some(
+      (noti) => noti.thongBaoId.toString() === thongBaoId,
+    );
+    if (!thongBaoExists) {
+      throw new NotFoundException('Thông báo không tồn tại trong danh sách của sinh viên.');
+    }
+  
+    const updatedSinhVien = await this.sinhVienModel.findOneAndUpdate(
+      { mssv, 'ThongBao.thongBaoId': new Types.ObjectId(thongBaoId) },
+      { $set: { 'ThongBao.$.isRead': true } },
+      { new: true },
+    ).exec();
+    if (!updatedSinhVien) {
+      throw new NotFoundException('Không thể cập nhật sinh viên.');
+    }
+    return updatedSinhVien;
+  }
 }

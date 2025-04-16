@@ -17,8 +17,13 @@ import {
 import { KhoaHocService } from './KhoaHoc.service';
 import { JWTAuthGuard } from 'src/auth/guards/jwt.guard';
 import { AddCourseDto } from 'src/KhoaHoc/dto/add-KhoaHoc.dto';
+
 import { GetCourseListDto } from './dto/getListCourse.dto';
 import { UpdateCourseDto } from './dto/updateCourse.dto';
+import { RateCourseDto } from './dto/rateCourse.dto';
+import { get } from 'mongoose';
+import { CreateDeadlineDto } from './dto/createDeadline.dto';
+import { UpdateDeadlineDto } from './dto/updateDeadline.dto';
 
 @Controller('api/KhoaHoc')
 export class KhoaHocController {
@@ -196,17 +201,83 @@ export class KhoaHocController {
       return { message: 'Danh sách tài liệu của khóa học', files };
   }
 
-    @Delete('removeFile/:khoaHocId/:taiLieuId')
-    @UseGuards(JWTAuthGuard)
-    async removeFile(@Req() req: any, @Param('khoaHocId') khoaHocId: string, @Param('taiLieuId') taiLieuId: string){
-        
-        try {
-            if (req.user.role !== "admin" && req.user.role !=="teacher")
-                throw new UnauthorizedException('Không có quyền thực hiện thao tác này')
-            const result = await this.khoaHocService.deleteFile(khoaHocId, taiLieuId, req.user);
-            return result;
-        } catch (error) {
-            return { message: error.message };
-        }
+  @Delete('removeFile/:khoaHocId/:taiLieuId')
+  @UseGuards(JWTAuthGuard)
+  async removeFile(@Req() req: any, @Param('khoaHocId') khoaHocId: string, @Param('taiLieuId') taiLieuId: string){
+      
+      try {
+          if (req.user.role !== "admin" && req.user.role !=="teacher")
+              throw new UnauthorizedException('Không có quyền thực hiện thao tác này')
+          const result = await this.khoaHocService.deleteFile(khoaHocId, taiLieuId, req.user);
+          return result;
+      } catch (error) {
+          return { message: error.message };
+      }
+  }
+
+  @Post('rate/:MaKhoaHoc')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe())
+  async rateCourse(@Param('MaKhoaHoc') MaKhoaHoc: string, @Body() rateCourseDto: RateCourseDto, @Req() req: any,) {
+    try{
+      if (req.user.role !== 'student') {
+        throw new UnauthorizedException('Chỉ sinh viên mới có thể đánh giá khóa học.');
+      }
+      const mssv = req.user.username;
+      const result = await this.khoaHocService.rateCourse(MaKhoaHoc, mssv, rateCourseDto);
+      return { message: 'Đánh giá khóa học thành công.', data: result };
     }
+    catch(error)
+    {
+      return error;
+    }
+    
+  }
+
+  @Get('listRatings/:MaKhoaHoc')
+  async getListCourseRatings(@Param('MaKhoaHoc') MaKhoaHoc: string) {
+    const result = await this.khoaHocService.getListCourseRatings(MaKhoaHoc);
+    return { message: 'Danh sách đánh giá khóa học.', data: result };
+  }
+
+  @Get('ratings/:MaKhoaHoc')
+  async getCourseRatings(@Param('MaKhoaHoc') MaKhoaHoc: string) {
+    return await this.khoaHocService.getCourseRatings(MaKhoaHoc);
+  }
+
+  @Post(':id/deadline')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe())
+  async createDeadline(@Param('id') khoaHocId: string, @Body() createDeadlineDto: CreateDeadlineDto, @Req() req: any) {
+    if (req.user.role !== 'admin' && req.user.role !== 'teacher') {
+      throw new UnauthorizedException('Không có quyền tạo deadline.');
+    }
+
+    const deadline = await this.khoaHocService.createDeadline(
+      khoaHocId,
+      createDeadlineDto,
+      req.user.username,
+      req.user.role,
+    );
+    return { message: 'Deadline created successfully', deadline };
+  }
+
+  @Put(':id/deadline/:deadlineId')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe())
+  async updateDeadline(@Param('id') khoaHocId: string, @Param('deadlineId') deadlineId: string, @Body() updateDeadlineDto: UpdateDeadlineDto, @Req() req: any) {
+    if (req.user.role !== 'admin' && req.user.role !== 'teacher') {
+      throw new UnauthorizedException('Không có quyền cập nhật deadline.');
+    }
+    const deadline = await this.khoaHocService.updateDeadline(
+      khoaHocId,
+      deadlineId,
+      updateDeadlineDto,
+      req.user.username,
+      req.user.role,
+    );
+    return { message: 'Deadline updated successfully', deadline };
+
+  }
+
 }

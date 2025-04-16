@@ -12,24 +12,24 @@ export default function Footer({}) {
             px: "5em", py: "2em",
             display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"
     }}>
-        <Typography sx={{ fontWeight: 700, fontSize: "1rem", color: "white" }}>
+        <Typography sx={{ fontWeight: 600, fontSize: "1rem", color: "primary.lighter" }}>
             © 2025 InfoStudia. All Rights Reserved.
         </Typography>
         <Box sx={{ display: "flex", justifyContent: "center", gap: 2, mt: 1 }}>
-            <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+            <Typography sx={{ color: "primary.lighter", fontSize: "0.8rem" }}>
                 Privacy Policy
             </Typography>
-            <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+            <Typography sx={{ color: "primary.lighter", fontSize: "0.8rem" }}>
                 Terms of Service
             </Typography>
-            <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+            <Typography sx={{ color: "primary.lighter", fontSize: "0.8rem" }}>
                 LinkedIn
             </Typography>
-            <Typography sx={{ color: "white", fontSize: "0.8rem" }}>
+            <Typography sx={{ color: "primary.lighter", fontSize: "0.8rem" }}>
                 Twitter
             </Typography>
         </Box>
-        <Typography sx={{ fontSize: "1rem", color: "white", mt: 1 }}>
+        <Typography sx={{ fontSize: "1rem", color: "primary.lighter", mt: 1 }}>
             v1.0.0
         </Typography>
     </Container>

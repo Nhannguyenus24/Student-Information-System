@@ -30,13 +30,13 @@ import { guestDefaultContainer, guestContainerBesidesHome,
 const teamMembers = [
   {
     name: "Nguyễn Trọng Nhân",
-    role: "CEO, Fullstack Developer",
+    role: "Fullstack Developer",
     img: "https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-6/474666549_2641534779375369_4594648735971289345_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=f727a1&_nc_ohc=dCbf_6N9jWAQ7kNvgEM5GVB&_nc_oc=AdnCYwXBxPmYCfe3oV9jUOTLj6uPKZ1c-1vwk0d-wrUsoFToJ-I6WcQZpk8KshxwRv0&_nc_zt=23&_nc_ht=scontent.fhan4-3.fna&_nc_gid=PnVgiWdjzmgTkuoQDwoZrQ&oh=00_AYEbVOGlrpxatLoaj8eewpNfmL7fqVta9RLku6iIn8ucqA&oe=67ED269F",
     email: "ntnhan223@clc.fitus.edu.vn",
     phone: "0345-678-901",
     university: "Trường Đại học Khoa học tự nhiên, ĐHQG-HCM",
     major: "Công nghệ phần mềm",
-    bio: "Lãnh đạo với tầm nhìn chiến lược, giúp công ty phát triển mạnh mẽ trong lĩnh vực công nghệ.",
+    bio: "Giúp công ty phát triển mạnh mẽ trong lĩnh vực công nghệ.",
   },
   {
     name: "Lâm Tiến Huy",
@@ -85,6 +85,7 @@ export default function AboutUs() {
 
   return (
     <Page title="About Us">
+      
       <Header />
 
       <Container {...guestContainerBesidesHome}>
@@ -101,7 +102,7 @@ export default function AboutUs() {
             <Typography sx={guestTitle}>
               About Us
             </Typography>
-            <Typography variant="h6" textAlign="center" color="text.secondary" sx={{ maxWidth: 600, mt: 6, mx: "auto" }}>
+            <Typography variant="body2" textAlign="center" color="text.secondary" sx={{ maxWidth: 700, mt: 6, mx: "auto" }}>
               We, <Typography component="span" sx={{...guestSpanStrong, fontSize: "1.4rem"}}>Group 7</Typography>
               , are a passionate team dedicated to delivering outstanding digital solutions that drive real impact.
             </Typography>
@@ -129,10 +130,10 @@ export default function AboutUs() {
                 transition={{ duration: 0.8 }} 
                 viewport={{ once: true }}
               >
-                <Typography variant="h4" sx={{ fontWeight: "700", color: "#407BFF" }} gutterBottom>
+                <Typography variant="h4" sx={{ color: "primary.main" }} gutterBottom>
                     Our Mission
                 </Typography>
-                <Typography variant="h6" color="text.secondary" textAlign="justify">
+                <Typography variant="body2" color="text.secondary" textAlign="justify">
                   Our mission is to innovate and create digital products that help businesses grow. We focus on user
                   experience, cutting-edge technology, and impactful solutions.
                 </Typography>
@@ -146,10 +147,10 @@ export default function AboutUs() {
                   transition={{ duration: 0.8 }} 
                   viewport={{ once: true }}
               >
-                <Typography variant="h4" sx={{ fontWeight: "700", color: "#407BFF" }} gutterBottom>
+                <Typography variant="h4" sx={{ color: "primary.main" }} gutterBottom>
                   Our Vision
                 </Typography>
-                <Typography variant="h6" color="text.secondary" textAlign="justify">
+                <Typography variant="body2" color="text.secondary" textAlign="justify">
                   Our vision is to become a leading force in the digital transformation landscape,
                   empowering businesses with innovative technology solutions. We strive to create products
                   that are not only functional but also intuitive, scalable, and future-proof.
@@ -183,7 +184,7 @@ export default function AboutUs() {
             transition={{ duration: 0.8 }} 
             viewport={{ once: true }}
           >
-            <Typography variant="h3" textAlign="center" fontWeight={700} sx={{ color: "#407BFF", mt: 15, mb: 10 }}>
+            <Typography variant="h3" textAlign="center" sx={{ fontSize: 40, color: "primary.main", mt: 15, mb: 8 }}>
               Meet Our Team
             </Typography>
           </motion.div>
@@ -217,7 +218,7 @@ export default function AboutUs() {
                       <Typography variant="h6" fontWeight="bold">
                         {member.name}
                       </Typography>
-                      <Typography variant="body2" color="text.secondary">
+                      <Typography variant="body3" color="text.secondary">
                         {member.role}
                       </Typography>
                     </CardContent>
@@ -277,11 +278,11 @@ export default function AboutUs() {
                     <Typography variant="h5" fontWeight="bold">
                       {selectedMember.name}
                     </Typography>
-                    <Typography variant="body1" color="text.secondary">
+                    <Typography variant="body1" color="text.secondary" mb={2}>
                       {selectedMember.role}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body3"
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -292,7 +293,7 @@ export default function AboutUs() {
                       <PhoneIcon fontSize="small" /> {selectedMember.phone}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body3"
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -303,7 +304,7 @@ export default function AboutUs() {
                       <EmailIcon fontSize="small" /> {selectedMember.email}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body3"
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -314,7 +315,7 @@ export default function AboutUs() {
                       <SchoolIcon fontSize="small" /> {selectedMember.university}
                     </Typography>
                     <Typography
-                      variant="body2"
+                      variant="body3"
                       sx={{
                         display: "flex",
                         alignItems: "center",
@@ -325,7 +326,7 @@ export default function AboutUs() {
                       <MenuBookIcon fontSize="small" /> {selectedMember.major}
                     </Typography>
                     
-                    <Typography variant="body2" sx={{ mt: 1, fontStyle: "italic" }}>
+                    <Typography variant="body3" sx={{ mt: 2, fontStyle: "italic" }}>
                       {selectedMember.bio}
                     </Typography>
                   </motion.div>

@@ -125,4 +125,17 @@ export class GiangVienController {
       return { message: error.message };
     }
   }
+
+  @Post('markNotiAsRead/:thongBaoId')
+  @UseGuards(JWTAuthGuard)
+  async markNotiAsRead(@Param('thongBaoId') thongBaoId: string, @Req() req: any,) {
+    if (req.user.role !== 'teacher') {
+      throw new UnauthorizedException('Chỉ giảng viên mới có thể đánh dấu thông báo.');
+    }
+    const MaGV = req.user.username;
+
+    const updatedGiangVien = await this.GiangVienService.markNotiAsRead(MaGV, thongBaoId);
+    return { message: 'Đã đánh dấu thông báo là đã đọc.', data: updatedGiangVien };
+  }
+
 }

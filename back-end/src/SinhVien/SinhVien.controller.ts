@@ -153,4 +153,16 @@ export class SinhVienController {
       return { message: error.message };
     }
   }
+
+  @Post('markNotiAsRead/:thongBaoId')
+  @UseGuards(JWTAuthGuard)
+  async markNotiAsRead(@Param('thongBaoId') thongBaoId: string, @Req() req: any) {
+    if (req.user.role !== 'student') {
+      throw new UnauthorizedException('Chỉ sinh viên mới có thể đánh dấu thông báo.');
+    }
+    const mssv = req.user.username;
+
+    const updatedSinhVien = await this.sinhVienService.markNotiAsRead(mssv, thongBaoId);
+    return { message: 'Đã đánh dấu thông báo là đã đọc.', data: updatedSinhVien };
+  }
 }

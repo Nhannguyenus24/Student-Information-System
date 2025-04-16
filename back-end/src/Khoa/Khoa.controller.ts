@@ -15,10 +15,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { JWTAuthGuard } from 'src/auth/guards/jwt.guard';
+import { updateKhoaDTO } from './dto/updateKhoa.dto';
+import { getFacultyListDTO } from './dto/getFacultyList.dto';
+import { addKhoaDTO } from './dto/addKhoa.dto';
 import { KhoaService } from './Khoa.service';
-import { addKhoaDTO } from './dto/addkhoa.dto';
-import { getFacultyListDTO } from './dto/getfacultyList.dto';
-import { updateKhoaDTO } from './dto/updatekhoa.dto';
+
+
 
 @Controller('api/Khoa')
 export class KhoaController {

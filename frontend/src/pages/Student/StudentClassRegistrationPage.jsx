@@ -27,8 +27,6 @@ import {
   styled,
   Divider,
 } from "@mui/material";
-import Header from "../../components/Header";
-import NavigationDrawer from "../../components/NavigationDrawer";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -274,11 +272,6 @@ export default function StudentClassRegistrationPage() {
   return (
     <Page title="StudentClassRegistrationPage">
       <Box sx={{ display: "flex" }}>
-        <Header toggleDrawer={toggleDrawer} />
-        <NavigationDrawer
-          isDrawerOpen={isDrawerOpen}
-          toggleDrawer={toggleDrawer}
-        />
 
         <Box
           component="main"

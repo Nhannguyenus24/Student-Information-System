@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   Box,
-  Paper,
   Typography,
   Card,
   CardContent,
@@ -16,8 +15,6 @@ import {
   ListItemIcon,
   Grid2,
 } from "@mui/material";
-import Header from "../../components/Header";
-import TeacherNavigationDrawer from "./TeacherNavigationDrawer";
 import Page from "../../components/Page";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import EmailIcon from "@mui/icons-material/Email";
@@ -68,11 +65,6 @@ export default function Dashboard() {
   return (
     <Page title="TeacherDashboardPage">
       <Box sx={{ display: "flex" }}>
-        <Header toggleDrawer={toggleDrawer} />
-        <TeacherNavigationDrawer
-          isDrawerOpen={isDrawerOpen}
-          toggleDrawer={toggleDrawer}
-        />
         <Box
           component="main"
           sx={{

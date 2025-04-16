@@ -12,11 +12,15 @@ import { AuthModule } from 'src/auth/auth.module';
 import { TaiLieu, TaiLieuSchema } from 'src/schemas/TaiLieu.schema';
 import { UploadModule } from 'src/upload/upload.module';
 import { UploadService } from 'src/upload/upload.service';
+import { DanhGiaKhoaHoc, DanhGiaKhoaHocSchema } from 'src/schemas/DanhGiaKhoaHoc.schema';
+import { LichHoc, LichHocSchema } from 'src/schemas/LichHoc.schema';
 
 @Module({
   imports:[
     MongooseModule.forFeature([{name: KhoaHoc.name, schema: KhoaHocSchema}, 
-                       {name: TaiLieu.name, schema: TaiLieuSchema}
+                       {name: TaiLieu.name, schema: TaiLieuSchema},
+                       {name: DanhGiaKhoaHoc.name, schema: DanhGiaKhoaHocSchema},
+                       {name: LichHoc.name, schema: LichHocSchema}
                       ]),
     JwtModule.register({
               secret: 'abc123',

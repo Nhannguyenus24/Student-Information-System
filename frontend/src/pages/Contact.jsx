@@ -1,12 +1,15 @@
 // components
-import { Container, Box, Typography, Card } from "@mui/material";
+import { Container, Box, Typography, Card, useMediaQuery } from "@mui/material";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Page from "../components/Page";
 import { motion } from "framer-motion";
-
-import { guestDefaultContainer, guestContainerContact,
-        guestTitle } from "../assets/styles/guest";
+import { useTheme } from "@mui/material/styles";
+import {
+  guestDefaultContainer,
+  guestContainerContact,
+  guestTitle,
+} from "../assets/styles/guest";
 
 import PhoneIcon from "@mui/icons-material/Phone";
 import SchoolIcon from "@mui/icons-material/School";
@@ -17,7 +20,18 @@ import EmailIcon from "@mui/icons-material/Email";
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeIn" } }
+};
+
+const fadeCenterLeft = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeIn", delay: 0.25 } }
+};
+
+const fadeCenterRight = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: "easeIn", delay: 0.5 } }
+
 };
 
 const MotionCard = motion(Card);
@@ -29,7 +43,7 @@ export default function Contact() {
 
         <Header />
 
-        <Container {...guestContainerContact}>
+        <Container disableGutters maxWidth="xl" sx={guestContainerContact}>
 
             <Container {...guestDefaultContainer}>
 
@@ -39,7 +53,7 @@ export default function Contact() {
                     transition={{ duration: 0.8 }} 
                     viewport={{ once: true }}
                 >
-                    <Typography sx={{...guestTitle, color: "white", mb: 8}}>
+                    <Typography sx={{...guestTitle, color: "white"}}>
                         Contact
                     </Typography>
                 </motion.div>
@@ -49,7 +63,7 @@ export default function Contact() {
                     <MotionBox
                         initial="hidden" 
                         whileInView="visible" 
-                        variants={fadeInUp} 
+                        variants={fadeCenterLeft} 
                         viewport={{ once: true }}
                         sx={{ flex: 1.5 }}
                     >
@@ -64,10 +78,9 @@ export default function Contact() {
                     <MotionCard
                             initial="hidden"
                             whileInView="visible"
-                            variants={fadeInUp}
+                            variants={fadeCenterRight}
                             viewport={{ once: true }}
                             sx={{
-                                backgroundColor: "white",
                                 borderRadius: 3,
                                 boxShadow: 3,
                                 p: "3em",
@@ -76,20 +89,20 @@ export default function Contact() {
                                 gap: "2em"
                             }}
                     >
-                            <Typography variant="h4" sx={{color: "black", textAlign: "center", fontWeight: 700}}>
+                            <Typography variant="h4" sx={{color: "secondary.darkest", textAlign: "center", fontWeight: 700}}>
                                 Contact Info
                             </Typography>
                             <Box sx={{display: "flex", flexDirection: "column", gap: "1em", alignItems:"flex-start"}}>
-                                <Typography sx={{fontSize: "1rem", color: "black", display: "flex", justifyContent: "center"}}>
+                                <Typography sx={{fontSize: "1rem", color: "secondary.darkest", display: "flex", justifyContent: "center"}}>
                                     <MenuBookIcon sx={{mr: 2}}/> 227 Nguyễn Văn Cừ, Ward 4, District 5, Hồ Chí Minh City
                                 </Typography>
-                                <Typography sx={{fontSize: "1rem", color: "black", display: "flex", justifyContent: "center"}}>
+                                <Typography sx={{fontSize: "1rem", color: "secondary.darkest", display: "flex", justifyContent: "center"}}>
                                     <EmailIcon sx={{mr: 2}}/> ntnhan223@clc.fitus.edu.vn
                                 </Typography>
-                                <Typography sx={{fontSize: "1rem", color: "black", display: "flex", justifyContent: "center"}}>
+                                <Typography sx={{fontSize: "1rem", color: "secondary.darkest", display: "flex", justifyContent: "center"}}>
                                     <PhoneIcon sx={{mr: 2}}/> 028 3975 6922 | 028 3975 6991
                                 </Typography>
-                                <Typography sx={{fontSize: "1rem", color: "black", display: "flex", justifyContent: "center"}}>
+                                <Typography sx={{fontSize: "1rem", color: "secondary.darkest", display: "flex", justifyContent: "center"}}>
                                     <SchoolIcon sx={{mr: 2}}/> Mr. Nguyễn Trọng Nhân
                                 </Typography>
                             </Box>
@@ -101,8 +114,7 @@ export default function Contact() {
 
         </Container>
 
-        <Footer />
-
-      </Page>
-    );
+      <Footer />
+    </Page>
+  );
 }

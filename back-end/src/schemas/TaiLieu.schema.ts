@@ -15,9 +15,12 @@ export class TaiLieu {
     MoTa: string;
 
     @Prop({ required: true })
-    TenNguoiDung: string;
+    NguoiDang: string;
 
-//   @Prop({ type: Types.ObjectId, ref: 'KhoaHoc' })
+
+    @Prop({ type: Date, default: Date.now })
+    NgayTao: Date;
+    //   @Prop({ type: Types.ObjectId, ref: 'KhoaHoc' })
 //   khoaHocId: Types.ObjectId;
 }
 

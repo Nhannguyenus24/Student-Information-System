@@ -14,8 +14,8 @@ import { HocPhiModule } from './HocPhi/HocPhi.module';
 import { BaiKiemTraModule } from './BaiKiemTra/BaiKiemTra.module';
 import { DiemDanhModule } from './DiemDanh/DiemDanh.module';
 import { DiemSoModule } from './DiemSo/DiemSo.module';
-import { KhoaModule } from './khoa/Khoa.module';
 import { UploadModule } from './upload/upload.module';
+import { KhoaModule } from './Khoa/Khoa.module';
 
 @Module({
   imports: [

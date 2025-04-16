@@ -35,7 +35,7 @@ const handlers = {
     ...state,
     isAuthenticated: false,
     user: null,
-  })
+  }),
 };
 
 const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
@@ -45,9 +45,11 @@ const AuthContext = createContext({
   method: 'jwt',
   login: () => Promise.resolve(),
   logout: () => Promise.resolve(),
+  register: () => Promise.resolve(),
 });
 
 // ----------------------------------------------------------------------
+
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -62,7 +64,6 @@ function AuthProvider({ children }) {
 
           const response = await axiosInstance.get('/account/my-account');
           const user = response.data;
-
           dispatch({
             type: 'INITIALIZE',
             payload: {
@@ -94,8 +95,11 @@ function AuthProvider({ children }) {
     initialize();
   }, []);
 
-  const login = async (username, password) => {
-    const response = await loginApi({ username, password});
+  const login = async (email, password) => {
+    const response = await loginApi({
+      username: email,
+      password,
+    });
 
     const { accessToken, user } = response.data;
 
@@ -107,6 +111,7 @@ function AuthProvider({ children }) {
       },
     });
   };
+
 
   const logout = async () => {
     setSession(null);
