@@ -213,6 +213,16 @@ export class SinhVienService {
     );
   }
 
+  async addNotiToStudentsInNienKhoa(
+    NienKhoa: string,
+    thongBaoId: Types.ObjectId,
+  ): Promise<void> {
+    await this.sinhVienModel.updateMany(
+      { Khoa: NienKhoa },
+      { $push: { ThongBao: { thongBaoId, isRead: false } } },
+    );
+  }
+
   async removeNotiFromAll(thongBaoId: string): Promise<void> {
     await this.sinhVienModel.updateMany(
       {},

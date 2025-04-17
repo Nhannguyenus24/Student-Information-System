@@ -11,7 +11,7 @@ export class ThongBaos {
   @Prop({ required: true })
   NoiDung: string;
 
-  @Prop({ required: true, enum: ['GiangVien', 'SinhVien', 'Khoa', 'KhoaHoc'] })
+  @Prop({ required: true, enum: ['GiangVien', 'SinhVien', 'Khoa', 'KhoaHoc', 'NienKhoa'] })
   NhomGui: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Khoa' })
