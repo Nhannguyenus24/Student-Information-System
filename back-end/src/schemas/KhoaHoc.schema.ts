@@ -27,14 +27,14 @@ export class Deadline {
   NgayHetHan: Date;
 
   @Prop({ type: [Submission], default: [] })
-  Submissions: Submission[]; 
+  Submissions: Submission[];
 }
 
 @Schema()
 export class KhoaHoc {
-  @Prop({required: true, unique: true})
+  @Prop({ required: true, unique: true })
   MaKhoaHoc: string;
-  
+
   @Prop({ required: true, unique: true })
   TenKhoaHoc: string;
 
@@ -47,9 +47,12 @@ export class KhoaHoc {
   @Prop()
   MoTa: string;
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SinhVien' }], default: [] })
+  @Prop({
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SinhVien' }],
+    default: [],
+  })
   SinhVienDangKy: Types.ObjectId[];
-  
+
   @Prop({ type: [Deadline], default: [] })
   Deadlines: Deadline[];
 
@@ -65,16 +68,16 @@ export class KhoaHoc {
   @Prop({ default: 0 })
   SoLuongSinhVienDangKy: number;
 
-  @Prop({ required: true})
+  @Prop({ required: true })
   HanDangKy: Date;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   NgayBatDau: Date;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   NgayKetThuc: Date;
 
-  @Prop({type:Types.ObjectId, ref:'Khoa', required: true})
+  @Prop({ type: Types.ObjectId, ref: 'Khoa', required: true })
   KhoaID: Types.ObjectId;
 }
 

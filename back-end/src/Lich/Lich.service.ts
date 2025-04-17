@@ -28,9 +28,11 @@ export class LichService {
 
     // eslint-disable-next-line @typescript-eslint/no-base-to-string
     const sinhVienID = sinhVien._id.toString();
+
     const khoaHocs = await this.khoaHocModel
       .find({ SinhVienDangKy: { $in: [sinhVienID] } })
       .exec();
+
     if (!khoaHocs || khoaHocs.length === 0) {
       throw new NotFoundException('Sinh viên chưa đăng ký khóa học nào');
     }
@@ -43,7 +45,13 @@ export class LichService {
     if (!baiKiemTras || baiKiemTras.length === 0) {
       throw new NotFoundException('Không tìm thấy bài kiểm tra nào');
     }
-    return baiKiemTras;
+    const ghichu = await this.LichModel.find({ SinhVienID: sinhVienID }).exec();
+
+    return {
+      khoaHocs,
+      baiKiemTras,
+      ghichu,
+    };
   }
 
   async updatecalendar(

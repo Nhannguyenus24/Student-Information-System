@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Deadline, KhoaHoc, KhoaHocDocument } from 'src/schemas/KhoaHoc.schema';
 import { AddCourseDto } from './dto/add-KhoaHoc.dto';
 import { GetCourseListDto } from './dto/getListCourse.dto';
@@ -13,26 +14,34 @@ import { UpdateCourseDto } from './dto/updateCourse.dto';
 import { SinhVienService } from 'src/SinhVien/SinhVien.service';
 import { GiangVien, GiangVienDocument } from 'src/schemas/GiangVien.schema';
 import { UploadService } from 'src/upload/upload.service';
-import { DanhGiaKhoaHoc, DanhGiaKhoaHocDocument } from 'src/schemas/DanhGiaKhoaHoc.schema';
+import {
+  DanhGiaKhoaHoc,
+  DanhGiaKhoaHocDocument,
+} from 'src/schemas/DanhGiaKhoaHoc.schema';
 import { RateCourseDto } from './dto/rateCourse.dto';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { DanhGia } from 'src/schemas/BaiKiemTra.schema';
 import { LichHoc, LichHocDocument } from 'src/schemas/LichHoc.schema';
 import { CreateDeadlineDto } from './dto/createDeadline.dto';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Mode } from 'fs';
 import { UpdateDeadlineDto } from './dto/updateDeadline.dto';
-import { Console } from 'console';
 import { AddTeacherintoCourseDto } from './dto/addTeacherDto';
 import { RemoveTeacherDto } from './dto/removeTeacher.dto';
 
 @Injectable()
 export class KhoaHocService {
   constructor(
-    @InjectModel(KhoaHoc.name) private readonly khoaHocModel: Model<KhoaHocDocument>,
-    @InjectModel(DanhGiaKhoaHoc.name) private readonly danhGiaKhoaHocModel: Model<DanhGiaKhoaHocDocument>,
-    @InjectModel(LichHoc.name) private readonly lichHocModel: Model<LichHocDocument>,
+    @InjectModel(KhoaHoc.name)
+    private readonly khoaHocModel: Model<KhoaHocDocument>,
+    @InjectModel(DanhGiaKhoaHoc.name)
+    private readonly danhGiaKhoaHocModel: Model<DanhGiaKhoaHocDocument>,
+    @InjectModel(LichHoc.name)
+    private readonly lichHocModel: Model<LichHocDocument>,
     private readonly sinhVienService: SinhVienService,
     private readonly uploadService: UploadService,
-    @InjectModel(GiangVien.name) private readonly giangVienModel: Model<GiangVienDocument>,
+    @InjectModel(GiangVien.name)
+    private readonly giangVienModel: Model<GiangVienDocument>,
   ) {}
 
   async addCourse(KhoaHocdto: AddCourseDto) {
@@ -144,6 +153,7 @@ export class KhoaHocService {
 
     // console.log(khoaHocs);
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     const khoaHocIds = khoaHocs.map((kh) => (kh as any)._id.toString());
     console.log(khoaHocIds);
     const lichHocList = await this.lichHocModel
@@ -152,7 +162,8 @@ export class KhoaHocService {
       .exec();
     console.log(lichHocList);
     const khoaHocsDetails = khoaHocs.map((khoahoc) => {
-      const khoaHocid = (khoahoc as  any)._id as Types.ObjectId;
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const khoaHocid = (khoahoc as any)._id as Types.ObjectId;
       return {
         ...khoahoc.toObject(),
         LichHoc: lichHocList
@@ -162,6 +173,7 @@ export class KhoaHocService {
             ThoiGianBatDau: lh.ThoiGianBatDau,
             ThoiGianKetThuc: lh.ThoiGianKetThuc,
             DiaDiem: lh.DiaDiem,
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
             GiangVien: lh.GiangVienID ? (lh.GiangVienID as any).HoTen : null,
             NgayCapNhat: lh.NgayCapNhat,
           })),
@@ -234,8 +246,8 @@ export class KhoaHocService {
       throw new NotFoundException('Khóa học không tồn tại');
     }
     const sinhVien = await this.sinhVienService.getStudentByMSSV(username);
-    console.log('sinh vien id: ',sinhVien.KhoaID.toString());
-    console.log('khóa học id: ',khoaHoc.KhoaID.toString())
+    console.log('sinh vien id: ', sinhVien.KhoaID.toString());
+    console.log('khóa học id: ', khoaHoc.KhoaID.toString());
     if (sinhVien.KhoaID._id.toString() !== khoaHoc.KhoaID.toString())
       throw new BadRequestException(
         'Sinh viên không thể đăng kí khóa học này.',
@@ -317,22 +329,31 @@ export class KhoaHocService {
   async getFilesByKhoaHocId(khoaHocId: string) {
     const khoaHoc = await this.khoaHocModel.findById(khoaHocId).exec();
     if (!khoaHoc) {
-      throw new NotFoundException(`Không tìm thấy khóa học với ID ${khoaHocId}`);
+      throw new NotFoundException(
+        `Không tìm thấy khóa học với ID ${khoaHocId}`,
+      );
     }
 
-    const files = await this.khoaHocModel.findById(khoaHocId).populate('TaiLieu').exec();
+    const files = await this.khoaHocModel
+      .findById(khoaHocId)
+      .populate('TaiLieu')
+      .exec();
     return files?.TaiLieu;
   }
 
   async deleteFile(khoaHocId: string, taiLieuId: string, user: any) {
-    
     const khoaHoc = await this.khoaHocModel.findById(khoaHocId).exec();
-    if (!khoaHoc) throw new NotFoundException(`Không tìm thấy khóa học ${khoaHocId}`);
+    if (!khoaHoc)
+      throw new NotFoundException(`Không tìm thấy khóa học ${khoaHocId}`);
 
     return await this.uploadService.deleteFile(taiLieuId, khoaHocId, user);
   }
 
-  async rateCourse(MaKhoaHoc: string, mssv: string, rateCourseDto: RateCourseDto) {
+  async rateCourse(
+    MaKhoaHoc: string,
+    mssv: string,
+    rateCourseDto: RateCourseDto,
+  ) {
     const khoaHoc = await this.khoaHocModel.findOne({ MaKhoaHoc }).exec();
     if (!khoaHoc) {
       throw new NotFoundException('Khóa học không tồn tại.');
@@ -343,8 +364,13 @@ export class KhoaHocService {
       throw new NotFoundException('Không tìm thấy sinh viên.');
     }
     // sinhVien._id
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     const sinhVienId = (sinhVien as any)._id as Types.ObjectId;
-    if (!khoaHoc.SinhVienDangKy.some((id) => id.toString() === sinhVienId.toString())) {
+    if (
+      !khoaHoc.SinhVienDangKy.some(
+        (id) => id.toString() === sinhVienId.toString(),
+      )
+    ) {
       throw new BadRequestException('Sinh viên chưa đăng ký khóa học này.');
     }
 
@@ -355,7 +381,7 @@ export class KhoaHocService {
       throw new BadRequestException('Sinh viên đã đánh giá khóa học này.');
     }
 
-    // console.log(rateCourseDto.DanhGia); 
+    // console.log(rateCourseDto.DanhGia);
     const danhGia = new this.danhGiaKhoaHocModel({
       KhoaHocID: khoaHoc._id,
       SinhVienID: sinhVienId,
@@ -364,8 +390,6 @@ export class KhoaHocService {
       ThoiGianDanhGia: new Date(),
     });
     return await danhGia.save();
-
-
   }
 
   async getListCourseRatings(MaKhoaHoc: string) {
@@ -373,7 +397,7 @@ export class KhoaHocService {
     if (!khoaHoc) {
       throw new NotFoundException('Khóa học không tồn tại.');
     }
-  
+
     const danhGiaList = await this.danhGiaKhoaHocModel
       .find({ KhoaHocID: khoaHoc._id })
       .populate('SinhVienID', 'HoTen MSSV')
@@ -387,7 +411,9 @@ export class KhoaHocService {
       TrungBinhSoSao: soLuongDanhGia > 0 ? tongSoSao / soLuongDanhGia : 0,
       DanhGia: danhGiaList.map((dg) => ({
         SinhVienID: dg.SinhVienID._id,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         HoTen: (dg.SinhVienID as any).HoTen,
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         MSSV: (dg.SinhVienID as any).MSSV,
         SoSao: dg.SoSao,
         DanhGia: dg.DanhGia,
@@ -401,7 +427,7 @@ export class KhoaHocService {
     if (!khoaHoc) {
       throw new NotFoundException('Khóa học không tồn tại.');
     }
-  
+
     const danhGiaList = await this.danhGiaKhoaHocModel
       .find({ KhoaHocID: khoaHoc._id })
       .populate('SinhVienID', 'HoTen MSSV')
@@ -410,11 +436,16 @@ export class KhoaHocService {
     const tongSoSao = danhGiaList.reduce((sum, dg) => sum + dg.SoSao, 0);
     return {
       SoLuongDanhGia: soLuongDanhGia,
-      TrungBinhSoSao: soLuongDanhGia > 0 ? tongSoSao / soLuongDanhGia : 0
+      TrungBinhSoSao: soLuongDanhGia > 0 ? tongSoSao / soLuongDanhGia : 0,
     };
   }
 
-  async createDeadline(khoaHocId: string, createDeadlineDto: CreateDeadlineDto, username: string, role: string): Promise<{ khoaHocId: string; deadline: any }> {
+  async createDeadline(
+    khoaHocId: string,
+    createDeadlineDto: CreateDeadlineDto,
+    username: string,
+    role: string,
+  ): Promise<{ khoaHocId: string; deadline: any }> {
     const { MoTa, NgayBatDau, NgayHetHan } = createDeadlineDto;
 
     const khoaHoc = await this.khoaHocModel
@@ -422,14 +453,20 @@ export class KhoaHocService {
       .populate('GiangVienID')
       .exec();
     if (!khoaHoc) {
-      throw new NotFoundException(`Không tìm thấy khóa học với ID ${khoaHocId}`);
+      throw new NotFoundException(
+        `Không tìm thấy khóa học với ID ${khoaHocId}`,
+      );
     }
 
     if (role !== 'admin') {
       const giangViens = khoaHoc.GiangVienID as unknown as GiangVienDocument[];
-      const isGiangVien = giangViens.some((giangVien) => giangVien.MaGV === username);
+      const isGiangVien = giangViens.some(
+        (giangVien) => giangVien.MaGV === username,
+      );
       if (!isGiangVien) {
-        throw new UnauthorizedException('Bạn không có quyền tạo deadline cho khóa học này');
+        throw new UnauthorizedException(
+          'Bạn không có quyền tạo deadline cho khóa học này',
+        );
       }
     }
 
@@ -458,7 +495,13 @@ export class KhoaHocService {
     return { khoaHocId, deadline: newDeadline };
   }
 
-  async updateDeadline(khoaHocId: string, deadlineId: string, updateDeadlineDto: UpdateDeadlineDto, username: string, role: string, ){
+  async updateDeadline(
+    khoaHocId: string,
+    deadlineId: string,
+    updateDeadlineDto: UpdateDeadlineDto,
+    username: string,
+    role: string,
+  ) {
     const { MoTa, NgayBatDau, NgayHetHan } = updateDeadlineDto;
 
     const khoaHoc = await this.khoaHocModel
@@ -467,21 +510,32 @@ export class KhoaHocService {
       .exec();
     console.log(khoaHoc);
     if (!khoaHoc) {
-      throw new NotFoundException(`Không tìm thấy khóa học hoặc deadline với ID ${deadlineId}`);
+      throw new NotFoundException(
+        `Không tìm thấy khóa học hoặc deadline với ID ${deadlineId}`,
+      );
     }
 
     if (role !== 'admin') {
       const giangViens = khoaHoc.GiangVienID as unknown as GiangVienDocument[];
-      const isGiangVien = giangViens.some((giangVien) => giangVien.MaGV === username);
+      const isGiangVien = giangViens.some(
+        (giangVien) => giangVien.MaGV === username,
+      );
       if (!isGiangVien) {
-        throw new UnauthorizedException('Bạn không có quyền cập nhật deadline này');
+        throw new UnauthorizedException(
+          'Bạn không có quyền cập nhật deadline này',
+        );
       }
     }
 
-    const deadline = khoaHoc.Deadlines.find((d) => (d as any)._id.toString() === deadlineId);
+    const deadline = khoaHoc.Deadlines.find(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      (d) => (d as any)._id.toString() === deadlineId,
+    );
     console.log(deadline);
     if (!deadline) {
-      throw new NotFoundException(`Không tìm thấy deadline với ID ${deadlineId}`);
+      throw new NotFoundException(
+        `Không tìm thấy deadline với ID ${deadlineId}`,
+      );
     }
     if (NgayBatDau || NgayHetHan) {
       const startDate = NgayBatDau ? new Date(NgayBatDau) : deadline.NgayBatDau;
@@ -500,14 +554,17 @@ export class KhoaHocService {
       {
         $set: {
           ...(MoTa !== undefined && { 'Deadlines.$.MoTa': MoTa }),
-          ...(NgayBatDau !== undefined && { 'Deadlines.$.NgayBatDau': new Date(NgayBatDau) }),
-          ...(NgayHetHan !== undefined && { 'Deadlines.$.NgayHetHan': new Date(NgayHetHan) }),
+          ...(NgayBatDau !== undefined && {
+            'Deadlines.$.NgayBatDau': new Date(NgayBatDau),
+          }),
+          ...(NgayHetHan !== undefined && {
+            'Deadlines.$.NgayHetHan': new Date(NgayHetHan),
+          }),
         },
       },
     );
   }
 
-  
   async addTeacherintoCourse(
     _id: string,
     addTeacherintoCoursedto: AddTeacherintoCourseDto,
@@ -528,19 +585,15 @@ export class KhoaHocService {
 
     if (giangVien?.KhoaID.toString() !== khoahoc.KhoaID.toString())
       throw new BadRequestException('Giảng viên không thuộc khoa này.');
-    const GiangVienID = giangVien._id;
 
     return await this.khoaHocModel.findByIdAndUpdate(
       _id,
-      {$push: {GiangVienID: giangVien._id}},
-      {new: true}
-    )
+      { $push: { GiangVienID: giangVien._id } },
+      { new: true },
+    );
   }
 
-  async removeTeacher(
-    _id: string,
-    removeTeacherDto: RemoveTeacherDto,
-  ) {
+  async removeTeacher(_id: string, removeTeacherDto: RemoveTeacherDto) {
     const khoahoc = await this.khoaHocModel.findById({ _id }).exec();
     if (!khoahoc) {
       throw new NotFoundException('Khóa học không tồn tại');
@@ -554,15 +607,14 @@ export class KhoaHocService {
     if (!giangVien._id) {
       throw new NotFoundException('Giảng viên không tồn tại');
     }
-    console.log(khoahoc.GiangVienID);
-    console.log(giangVien._id);
+    //console.log(khoahoc.GiangVienID);
+    //console.log(giangVien._id);
     // if (!khoahoc.GiangVienID.some((id) => id.toString() === giangVien._id)) {
     //   throw new BadRequestException('Giảng viên không thuộc khóa học này');
     // }
     if (!khoahoc.GiangVienID.includes(giangVien._id as Types.ObjectId))
       throw new BadRequestException('Giảng viên không thuộc khóa học này');
 
-  
     const updatedKhoaHoc = await this.khoaHocModel
       .findByIdAndUpdate(
         _id,
@@ -571,11 +623,11 @@ export class KhoaHocService {
       )
       .populate('GiangVienID')
       .exec();
-  
+
     if (!updatedKhoaHoc) {
       throw new NotFoundException('Không thể cập nhật khóa học');
     }
-  
+
     return updatedKhoaHoc;
   }
 }

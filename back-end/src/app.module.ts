@@ -17,6 +17,7 @@ import { DiemSoModule } from './DiemSo/DiemSo.module';
 import { UploadModule } from './upload/upload.module';
 import { KhoaModule } from './Khoa/Khoa.module';
 import { LichModule } from './Lich/Lich.module';
+
 @Module({
   imports: [
     // MongooseModule.forRoot(process.env.MONGO_URI),
