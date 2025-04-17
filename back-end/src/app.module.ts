@@ -47,6 +47,7 @@ import { KhoaModule } from './Khoa/Khoa.module';
     DiemDanhModule,
     DiemSoModule,
     UploadModule,
+    LichModule,
   ],
 })
 export class AppModule {}

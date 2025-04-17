@@ -11,11 +11,24 @@ export class DiemThanhPhan {
   @Prop()
   HeSo: number;
 
-  @Prop()
+  @Prop({ default: 0 })
   Diem: number;
 
   @Prop({ type: Types.ObjectId, ref: 'ThamGiaKiemTra' })
   BaiKiemTraID: Types.ObjectId;
+
+  @Prop({ default: false })
+  isAttempt: boolean;
+
+  @Prop({ default: false })
+  isCheating: boolean;
+
+  @Prop({ default: null })
+  startTime: Date;
+
+  @Prop({ type: [Number] })
+  kquaLamBai: number[];
+  private _id: any;
 }
 
 @Schema()

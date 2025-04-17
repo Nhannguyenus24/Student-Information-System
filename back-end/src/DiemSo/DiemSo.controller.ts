@@ -14,6 +14,8 @@ import { JWTAuthGuard } from 'src/auth/guards/jwt.guard';
 import { DiemSoService } from './DiemSo.service';
 import { UpdateScoreDto } from './dto/update-Score.dto';
 import { CreateScoreDto } from './dto/create-Score.dto';
+import { ConfirmTestDto } from './dto/confirm-Test.dto';
+import { SubmitTestDto } from './dto/submit-Test.dto';
 
 @Controller('api/DiemSo')
 export class DiemSoController {
@@ -134,5 +136,23 @@ export class DiemSoController {
       );
     }
     return this.DiemSoService.deleteScoreByMaKhoaHoc(MaKhoaHoc);
+  }
+
+  @Patch('confirmTakingTest/:_id')
+  @UseGuards(JWTAuthGuard)
+  async confirmTakingTest(
+    @Param('_id') _id: string,
+    @Body() confirmTestDto: ConfirmTestDto,
+  ) {
+    return this.DiemSoService.confirmTakingTest(_id, confirmTestDto);
+  }
+
+  @Patch('submitTest/:_id')
+  @UseGuards(JWTAuthGuard)
+  async submitTest(
+    @Param('_id') _id: string,
+    @Body() submitTestDto: SubmitTestDto,
+  ) {
+    return this.DiemSoService.submitTest(_id, submitTestDto);
   }
 }

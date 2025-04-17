@@ -1,7 +1,10 @@
 import {
   IsArray,
+  IsBoolean,
+  IsDate,
   IsMongoId,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -19,6 +22,24 @@ class CreateDiemThanhPhanDto {
 
   @IsMongoId()
   BaiKiemTraID: string;
+
+  @IsBoolean()
+  @IsOptional()
+  isAttempt?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isCheating?: boolean;
+
+  @IsDate()
+  @IsOptional()
+  @Type(() => Date)
+  startTime?: Date;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  kquaLamBai?: number[];
 }
 
 export class CreateScoreDto {
@@ -28,6 +49,7 @@ export class CreateScoreDto {
   @IsMongoId()
   KhoaHocID: string;
 
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateDiemThanhPhanDto)

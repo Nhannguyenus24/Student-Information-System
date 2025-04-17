@@ -1,6 +1,8 @@
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
+  IsDate,
   IsMongoId,
   IsNumber,
   IsOptional,
@@ -24,7 +26,26 @@ class UpdateDiemThanhPhanDto {
   @IsOptional()
   @IsMongoId()
   BaiKiemTraID?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  isAttempt?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isCheating?: boolean;
+
+  @IsOptional()
+  @IsDate()
+  @Type(() => Date)
+  startTime?: Date;
+
+  @IsOptional()
+  @IsArray()
+  @IsNumber({}, { each: true })
+  kquaLamBai?: number[];
 }
+
 export class UpdateScoreDto {
   @IsOptional()
   @IsMongoId()

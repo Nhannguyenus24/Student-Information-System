@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -6,11 +7,14 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { SinhVien, SinhVienDocument } from '../schemas/SinhVien.schema';
+import { BaiKiemTra, BaiKiemTraDocument } from '../schemas/BaiKiemTra.schema';
 import { KhoaHoc, KhoaHocDocument } from '../schemas/KhoaHoc.schema';
 import { DiemSo, DiemSoDocument } from '../schemas/DiemSo.schema';
 import { GiangVien, GiangVienDocument } from 'src/schemas/GiangVien.schema';
 import { UpdateScoreDto } from './dto/update-Score.dto';
 import { CreateScoreDto } from './dto/create-Score.dto';
+import { ConfirmTestDto } from './dto/confirm-Test.dto';
+import { SubmitTestDto } from './dto/submit-Test.dto';
 
 @Injectable()
 export class DiemSoService {
@@ -19,6 +23,8 @@ export class DiemSoService {
     @InjectModel(GiangVien.name)
     private giangVienModel: Model<GiangVienDocument>,
     @InjectModel(KhoaHoc.name) private khoaHocModel: Model<KhoaHocDocument>,
+    @InjectModel(BaiKiemTra.name)
+    private baikiemtraModel: Model<BaiKiemTraDocument>,
     @InjectModel(DiemSo.name)
     private DiemSoModel: Model<DiemSoDocument>,
   ) {}
@@ -203,5 +209,84 @@ export class DiemSoService {
       KhoaHocID: (KhoaHoc._id as Types.ObjectId).toString(),
     }).exec();
     return result;
+  }
+
+  async confirmTakingTest(
+    _id: string,
+    confirmTestDto: ConfirmTestDto,
+  ): Promise<DiemSo> {
+    const { isAttempt, startTime } = confirmTestDto;
+
+    const updatedScore = await this.DiemSoModel.findOneAndUpdate(
+      { 'DiemThanhPhan._id': (_id as unknown as Types.ObjectId).toString() },
+      {
+        $set: {
+          'DiemThanhPhan.$.isAttempt': isAttempt,
+          'DiemThanhPhan.$.startTime': startTime ?? new Date(),
+        },
+      },
+      { new: true },
+    );
+
+    if (!updatedScore) {
+      throw new NotFoundException('Không tìm thấy điểm thành phần');
+    }
+
+    return updatedScore;
+  }
+
+  async submitTest(_id: string, submitTestDto: SubmitTestDto): Promise<DiemSo> {
+    const { BaiKiemTraID, kquaLamBai } = submitTestDto;
+
+    const score = await this.DiemSoModel.findById({
+      _id,
+    });
+    if (!score) {
+      throw new NotFoundException('Không tìm thấy điểm');
+    }
+
+    const test = await this.baikiemtraModel.findById(BaiKiemTraID);
+    if (!test) {
+      throw new NotFoundException('Không tìm thấy bài kiểm tra');
+    }
+
+    const diemThanhPhan = score.DiemThanhPhan.find(
+      (d) => d.BaiKiemTraID?.toString() === BaiKiemTraID,
+    );
+    if (!diemThanhPhan || !diemThanhPhan.startTime) {
+      throw new BadRequestException(
+        'Không tìm thấy thời gian bắt đầu bài kiểm tra',
+      );
+    }
+
+    const startTime = new Date(diemThanhPhan.startTime);
+    const now = new Date();
+    const elapsedTime = (now.getTime() - startTime.getTime()) / 1000;
+
+    let isCheating = false;
+    let finalScore = 0;
+
+    if (elapsedTime > test.ThoiGianLam * 60) {
+      isCheating = true;
+      finalScore = 0;
+    }
+
+    const updatedScore = await this.DiemSoModel.findOneAndUpdate(
+      { 'DiemThanhPhan._id': new Types.ObjectId(_id) },
+      {
+        $set: {
+          'DiemThanhPhan.$.isCheating': isCheating,
+          'DiemThanhPhan.$.Diem': finalScore,
+          'DiemThanhPhan.$.kquaLamBai': isCheating ? [] : kquaLamBai,
+        },
+      },
+      { new: true },
+    ).exec();
+
+    if (!updatedScore) {
+      throw new NotFoundException('Không thể cập nhật điểm số');
+    }
+
+    return updatedScore;
   }
 }
