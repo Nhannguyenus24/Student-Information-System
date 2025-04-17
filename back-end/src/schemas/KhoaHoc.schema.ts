@@ -38,11 +38,8 @@ export class KhoaHoc {
   @Prop({ required: true, unique: true })
   TenKhoaHoc: string;
 
-  @Prop({ type: Types.ObjectId, ref: 'GiangVien', required: true })
-  GiangVienID: Types.ObjectId;
-
-  // @Prop({ type: Types.ObjectId, ref: 'GiangVien' })
-  // TroGiangID: Types.ObjectId;
+  @Prop({ type: [Types.ObjectId], ref: 'GiangVien' })
+  GiangVienID: Types.ObjectId[];
 
   @Prop({ required: true })
   SoTinChi: number;
@@ -53,11 +50,10 @@ export class KhoaHoc {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SinhVien' }], default: [] })
   SinhVienDangKy: Types.ObjectId[];
   
-
   @Prop({ type: [Deadline], default: [] })
   Deadlines: Deadline[];
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'TaiLieu' }], default: [] }) // Danh sách ID tài liệu
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'TaiLieu' }], default: [] })
   TaiLieu: Types.ObjectId[];
 
   @Prop({ type: Date, default: Date.now })

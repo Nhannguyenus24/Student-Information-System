@@ -21,6 +21,8 @@ import { CreateDeadlineDto } from './dto/createDeadline.dto';
 import { Mode } from 'fs';
 import { UpdateDeadlineDto } from './dto/updateDeadline.dto';
 import { Console } from 'console';
+import { AddTeacherintoCourseDto } from './dto/addTeacherDto';
+import { RemoveTeacherDto } from './dto/removeTeacher.dto';
 
 @Injectable()
 export class KhoaHocService {
@@ -424,8 +426,8 @@ export class KhoaHocService {
     }
 
     if (role !== 'admin') {
-      const giangVien = khoaHoc.GiangVienID as unknown as GiangVienDocument;
-      const isGiangVien = giangVien && giangVien.MaGV === username;
+      const giangViens = khoaHoc.GiangVienID as unknown as GiangVienDocument[];
+      const isGiangVien = giangViens.some((giangVien) => giangVien.MaGV === username);
       if (!isGiangVien) {
         throw new UnauthorizedException('Bạn không có quyền tạo deadline cho khóa học này');
       }
@@ -441,7 +443,6 @@ export class KhoaHocService {
     }
 
     const newDeadline = {
-      // _id: new Types.ObjectId(),
       MoTa,
       NgayBatDau: startDate,
       NgayHetHan: endDate,
@@ -470,8 +471,8 @@ export class KhoaHocService {
     }
 
     if (role !== 'admin') {
-      const giangVien = khoaHoc.GiangVienID as unknown as GiangVienDocument;
-      const isGiangVien = giangVien && giangVien.MaGV === username;
+      const giangViens = khoaHoc.GiangVienID as unknown as GiangVienDocument[];
+      const isGiangVien = giangViens.some((giangVien) => giangVien.MaGV === username);
       if (!isGiangVien) {
         throw new UnauthorizedException('Bạn không có quyền cập nhật deadline này');
       }
@@ -482,9 +483,6 @@ export class KhoaHocService {
     if (!deadline) {
       throw new NotFoundException(`Không tìm thấy deadline với ID ${deadlineId}`);
     }
-
-    
-
     if (NgayBatDau || NgayHetHan) {
       const startDate = NgayBatDau ? new Date(NgayBatDau) : deadline.NgayBatDau;
       const endDate = NgayHetHan ? new Date(NgayHetHan) : deadline.NgayHetHan;
@@ -507,5 +505,77 @@ export class KhoaHocService {
         },
       },
     );
+  }
+
+  
+  async addTeacherintoCourse(
+    _id: string,
+    addTeacherintoCoursedto: AddTeacherintoCourseDto,
+  ) {
+    const khoahoc = await this.khoaHocModel.findById({ _id }).exec();
+    if (!khoahoc) {
+      throw new NotFoundException('Khóa học không tồn tại');
+    }
+
+    const MaGV = addTeacherintoCoursedto.MaGV;
+    const giangVien = await this.giangVienModel.findOne({ MaGV }).exec();
+    if (!giangVien) {
+      throw new NotFoundException('Giảng viên không tồn tại');
+    }
+    if (!giangVien._id) {
+      throw new NotFoundException('Giảng viên không tồn tại');
+    }
+
+    if (giangVien?.KhoaID.toString() !== khoahoc.KhoaID.toString())
+      throw new BadRequestException('Giảng viên không thuộc khoa này.');
+    const GiangVienID = giangVien._id;
+
+    return await this.khoaHocModel.findByIdAndUpdate(
+      _id,
+      {$push: {GiangVienID: giangVien._id}},
+      {new: true}
+    )
+  }
+
+  async removeTeacher(
+    _id: string,
+    removeTeacherDto: RemoveTeacherDto,
+  ) {
+    const khoahoc = await this.khoaHocModel.findById({ _id }).exec();
+    if (!khoahoc) {
+      throw new NotFoundException('Khóa học không tồn tại');
+    }
+
+    const MaGV = removeTeacherDto.MaGV;
+    const giangVien = await this.giangVienModel.findOne({ MaGV }).exec();
+    if (!giangVien) {
+      throw new NotFoundException('Giảng viên không tồn tại');
+    }
+    if (!giangVien._id) {
+      throw new NotFoundException('Giảng viên không tồn tại');
+    }
+    console.log(khoahoc.GiangVienID);
+    console.log(giangVien._id);
+    // if (!khoahoc.GiangVienID.some((id) => id.toString() === giangVien._id)) {
+    //   throw new BadRequestException('Giảng viên không thuộc khóa học này');
+    // }
+    if (!khoahoc.GiangVienID.includes(giangVien._id as Types.ObjectId))
+      throw new BadRequestException('Giảng viên không thuộc khóa học này');
+
+  
+    const updatedKhoaHoc = await this.khoaHocModel
+      .findByIdAndUpdate(
+        _id,
+        { $pull: { GiangVienID: giangVien._id } },
+        { new: true },
+      )
+      .populate('GiangVienID')
+      .exec();
+  
+    if (!updatedKhoaHoc) {
+      throw new NotFoundException('Không thể cập nhật khóa học');
+    }
+  
+    return updatedKhoaHoc;
   }
 }

@@ -100,9 +100,9 @@ export class ThongBaoService {
           );
           const giangVienId = giangVien?._id as Types.ObjectId;
           if (
-            !khoaHoc.GiangVienID.equals(giangVienId)) {
+            !khoaHoc.GiangVienID.includes(giangVienId)) {
             throw new UnauthorizedException(
-              'You can only notify students of your own class',
+              'Chỉ có thể gửi thông báo cho giảng viên của lớp bạn.',
             );
           }
         }
@@ -113,8 +113,7 @@ export class ThongBaoService {
         );
 
         if (isAdmin) {
-          const lecturerIds = [khoaHoc.GiangVienID];
-          // if (khoaHoc.TroGiangID) lecturerIds.push(khoaHoc.TroGiangID);
+          const lecturerIds = khoaHoc.GiangVienID;
           await this.giangVienService.addThongBaoToLecturersInKhoaHoc(
             lecturerIds,
             thongBaoId,

@@ -24,6 +24,7 @@ import { RateCourseDto } from './dto/rateCourse.dto';
 import { get } from 'mongoose';
 import { CreateDeadlineDto } from './dto/createDeadline.dto';
 import { UpdateDeadlineDto } from './dto/updateDeadline.dto';
+import { AddTeacherintoCourseDto } from './dto/addTeacherDto';
 
 @Controller('api/KhoaHoc')
 export class KhoaHocController {
@@ -281,4 +282,45 @@ export class KhoaHocController {
 
   }
 
+  @Post('addTeacherintoCourse/:id')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  async addTeacherintoCourse(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body() body: AddTeacherintoCourseDto,
+  ) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      if (req.user.role !== 'admin')
+        throw new UnauthorizedException(
+          'Bạn không có quyền thực hiện thao tác này.',
+        );
+      const KhoaHoc = await this.khoaHocService.addTeacherintoCourse(id, body);
+      return { message: 'Giáo viên đã được thêm vào khóa học thành công!', KhoaHoc };
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return error;
+    }
+  }
+
+  @Delete('removeTeacher/:id')
+  @UseGuards(JWTAuthGuard)
+  @UsePipes(new ValidationPipe())
+  async removeTeacher(
+    @Param('id') id: string,
+    @Req() req: any,
+    @Body() body: AddTeacherintoCourseDto,
+  ) {
+    try {
+      if (req.user.role !== 'admin')
+        throw new UnauthorizedException(
+          'Bạn không có quyền thực hiện thao tác này.',
+        );
+      const KhoaHoc = await this.khoaHocService.removeTeacher(id, body);
+      return { message: 'Giáo viên đã được xóa khỏi khóa học thành công!', KhoaHoc };
+    } catch (error) {
+      return error;
+    }
+  }
 }

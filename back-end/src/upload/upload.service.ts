@@ -53,13 +53,10 @@ export class UploadService {
       );
     }
     if (role !== 'admin') {
-      const giangVien = khoaHoc.GiangVienID as unknown as GiangVienDocument;
-
-      const isGiangVien = giangVien && giangVien.MaGV === username;
+      const giangViens = khoaHoc.GiangVienID as unknown as GiangVienDocument[];
+      const isGiangVien = giangViens.some((giangVien) => giangVien.MaGV === username);
       if (!isGiangVien) {
-        throw new UnauthorizedException(
-          'Bạn không có quyền upload tài liệu cho khóa học này',
-        );
+        throw new UnauthorizedException('Bạn không có quyền upload tài liệu cho khóa học này');
       }
     }
 
@@ -102,9 +99,9 @@ export class UploadService {
       throw new NotFoundException(`Không tìm thấy giáo viên với MaGV ${MaGV}`);
     }
 
-    if (MaGV !== MaGV) {
-      throw new UnauthorizedException('Bạn không có quyền upload ảnh cho giáo viên này');
-    }
+    // if (giangVien.MaGV !== MaGV) {
+    //   throw new UnauthorizedException('Bạn không có quyền upload ảnh cho giáo viên này');
+    // }
 
     const allowedExtensions = ['jpg', 'jpeg', 'png'];
     const fileExtension = file.originalname.split('.').pop()?.toLowerCase();

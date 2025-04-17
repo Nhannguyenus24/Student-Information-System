@@ -10,10 +10,6 @@ export class AddCourseDto {
   @IsString()
   GiangVienID: Types.ObjectId;
 
-  // @IsOptional()
-  // @IsString()
-  // TroGiangID?: Types.ObjectId;
-
   @IsNotEmpty()
   @IsInt()
   SoTinChi: number;
