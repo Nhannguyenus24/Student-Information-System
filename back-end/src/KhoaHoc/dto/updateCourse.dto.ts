@@ -10,9 +10,9 @@ export class UpdateCourseDto {
   @IsString()
   GiangVienID?: Types.ObjectId;
 
-  @IsOptional()
-  @IsString()
-  TroGiangID?: Types.ObjectId;
+  // @IsOptional()
+  // @IsString()
+  // TroGiangID?: Types.ObjectId;
 
   @IsOptional()
   @IsInt()

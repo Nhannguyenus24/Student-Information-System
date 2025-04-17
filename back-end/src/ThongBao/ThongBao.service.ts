@@ -100,9 +100,7 @@ export class ThongBaoService {
           );
           const giangVienId = giangVien?._id as Types.ObjectId;
           if (
-            !khoaHoc.GiangVienID.equals(giangVienId) &&
-            (!khoaHoc.TroGiangID || !khoaHoc.TroGiangID.equals(giangVienId))
-          ) {
+            !khoaHoc.GiangVienID.equals(giangVienId)) {
             throw new UnauthorizedException(
               'You can only notify students of your own class',
             );
@@ -116,7 +114,7 @@ export class ThongBaoService {
 
         if (isAdmin) {
           const lecturerIds = [khoaHoc.GiangVienID];
-          if (khoaHoc.TroGiangID) lecturerIds.push(khoaHoc.TroGiangID);
+          // if (khoaHoc.TroGiangID) lecturerIds.push(khoaHoc.TroGiangID);
           await this.giangVienService.addThongBaoToLecturersInKhoaHoc(
             lecturerIds,
             thongBaoId,

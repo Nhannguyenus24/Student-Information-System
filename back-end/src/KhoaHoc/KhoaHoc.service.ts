@@ -28,7 +28,6 @@ export class KhoaHocService {
     @InjectModel(KhoaHoc.name) private readonly khoaHocModel: Model<KhoaHocDocument>,
     @InjectModel(DanhGiaKhoaHoc.name) private readonly danhGiaKhoaHocModel: Model<DanhGiaKhoaHocDocument>,
     @InjectModel(LichHoc.name) private readonly lichHocModel: Model<LichHocDocument>,
-    // @InjectModel(Deadline.name) private readonly deadlineModel,
     private readonly sinhVienService: SinhVienService,
     private readonly uploadService: UploadService,
     @InjectModel(GiangVien.name) private readonly giangVienModel: Model<GiangVienDocument>,
@@ -51,10 +50,6 @@ export class KhoaHocService {
     if (giangVien?.KhoaID.toString() !== KhoaID)
       throw new BadRequestException('Giảng viên không thuộc khoa này.');
 
-    const TroGiangID = KhoaHocdto.TroGiangID;
-    const troGiang = await this.giangVienModel.findById(TroGiangID).exec();
-    if (troGiang?.KhoaID.toString() !== KhoaID)
-      throw new BadRequestException('Trợ giảng không thuộc khoa này.');
     const SoTinChi = KhoaHocdto.SoTinChi;
     const MoTa = KhoaHocdto.MoTa;
     const SoLuongToiDa = KhoaHocdto.SoLuongToiDa;
@@ -66,7 +61,6 @@ export class KhoaHocService {
       MaKhoaHoc,
       TenKhoaHoc,
       GiangVienID,
-      TroGiangID,
       SoTinChi,
       MoTa,
       NgayCapNhat: Date.now(),
@@ -120,7 +114,6 @@ export class KhoaHocService {
     const khoaHoc = await this.khoaHocModel
       .findOne({ MaKhoaHoc })
       .populate('GiangVienID', 'HoTen')
-      .populate('TroGiangID', 'HoTen')
       .populate('KhoaID', 'TenKhoa')
       .exec();
     return khoaHoc;
@@ -424,7 +417,7 @@ export class KhoaHocService {
 
     const khoaHoc = await this.khoaHocModel
       .findById(khoaHocId)
-      .populate('GiangVienID TroGiangID')
+      .populate('GiangVienID')
       .exec();
     if (!khoaHoc) {
       throw new NotFoundException(`Không tìm thấy khóa học với ID ${khoaHocId}`);

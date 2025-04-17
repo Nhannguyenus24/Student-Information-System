@@ -152,6 +152,7 @@ export class KhoaHocController {
     @Param('MaKHoaHoc') MaKHoaHoc: string,
     @Req() req: any,
   ) {
+    // console.log("-----------------------------------");
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     const username = req.user.username;
     // console.log(studentId);

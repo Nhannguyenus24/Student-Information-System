@@ -41,8 +41,8 @@ export class KhoaHoc {
   @Prop({ type: Types.ObjectId, ref: 'GiangVien', required: true })
   GiangVienID: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: 'GiangVien' })
-  TroGiangID: Types.ObjectId;
+  // @Prop({ type: Types.ObjectId, ref: 'GiangVien' })
+  // TroGiangID: Types.ObjectId;
 
   @Prop({ required: true })
   SoTinChi: number;
